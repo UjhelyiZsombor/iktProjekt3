@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|e:\\code\\11\\iktprojekt3\\iktprojekt3\\projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|e:\\code\\11\\iktprojekt3\\iktprojekt3\\projekt_3\\projekt_3\\tetelek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\tetelek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|e:\\code\\11\\iktprojekt3\\iktprojekt3\\projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
@@ -14,11 +22,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Tetelek.cs",
+              "DocumentMoniker": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "RelativeDocumentMoniker": "Projekt_3\\Tetelek.cs",
+              "ToolTip": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "RelativeToolTip": "Projekt_3\\Tetelek.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAADwv3sAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T16:09:38.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\Projekt_3\\Form1.cs",
+              "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
+              "ToolTip": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\Projekt_3\\Form1.cs",
+              "RelativeToolTip": "Projekt_3\\Form1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T16:09:11.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "E:\\Code\\11\\iktProjekt3\\iktProjekt3\\Projekt_3\\Projekt_3\\Form1.cs",
               "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
