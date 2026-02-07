@@ -1,0 +1,10 @@
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe.config
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.pdb
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.AssemblyReference.cache
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Form1.resources
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Properties.Resources.resources
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.GenerateResource.cache
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
+E:\Code\11\iktProjekt3\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
