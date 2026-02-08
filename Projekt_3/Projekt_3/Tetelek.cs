@@ -5,14 +5,13 @@ namespace Projekt_3
 {
     internal class Tetelek
     {
-        public static double Osszegzes(double[] tomb)
+        public static double Megszamolas(double[] tomb, double keresett)
         {
-            double osszeg = 0;
-            foreach (var item in tomb)
-            {
-                osszeg += item;
-            }
-            return osszeg;
+            int c = 0;
+            for (int i = 0; i < tomb.Length; i++)
+                if (tomb[i] == keresett)
+                    c++;
+            return c;
         }
         public static bool Eldontes(double[] tomb, double keresett)
         {
