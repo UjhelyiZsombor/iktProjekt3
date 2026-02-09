@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing.Text;
-using System.Security.AccessControl;
 
 namespace Projekt_3
 {
@@ -89,28 +91,128 @@ namespace Projekt_3
             }
 
         }
+        #region Megszamolas
         private void Megszamolas()
         {
+            TextBox Also = new TextBox()
+            {
+                Parent = Container.Panel2,
+                Location = new Point(20, 20),
+                Size = new Size(180, 40),
+                Text = "Számok alsó határa",
+                Tag = "Also"
+            };
+            Also.Enter += Keresett_Enter;
+            Also.Leave += Keresett_Leave;
+
+            TextBox Felso = new TextBox()
+            {
+                Parent = Container.Panel2,
+                Location = new Point(20, Also.Location.Y + Also.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "Számok felső határa",
+                Tag = "Felso"
+            };
+
+            Felso.Enter += Keresett_Enter;
+            Felso.Leave += Keresett_Leave;
+
             NumericUpDown Elemszam = new NumericUpDown()
             {
                 Parent = Container.Panel2,
                 Minimum = 1,
-                Maximum = decimal.MaxValue,
-                Location = new Point(20, 20),
-                Size = new Size(180, 40)
+                Maximum = 10000000,
+                Location = new Point(20, Felso.Location.Y + Felso.Size.Height + 20),
+                Size = new Size(180, 40),
             };
             Elemszam.ValueChanged += Elemszam_ValueChanged;
+
+            TextBox Keresett = new TextBox()
+            {
+                Parent = Container.Panel2,
+                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "Keresett elem",
+                Tag = "Keresett"
+            };
+            Keresett.Enter += Keresett_Enter;
+            Keresett.Leave += Keresett_Leave;
+
+            Button OK = new Button()
+            {
+                Parent = Container.Panel2,
+                Location = new Point(20, Keresett.Location.Y + Keresett.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "OK",
+            };
+            OK.Click += OK_Click;
+
+            Label Eredmeny = new Label()
+            {
+                Parent = Container.Panel2,
+                Location = new Point(20, OK.Location.Y + OK.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "Keresett elem előfordulása: "
+            };
+            OK.Tag = Tuple.Create(Keresett, Eredmeny);
+        }
+        private void OK_Click(object sender, EventArgs e)
+        {
+            Button ok = sender as Button;
+            var tag = ok.Tag as Tuple<TextBox, Label>;
+            TextBox Keresett = tag.Item1;
+            Label Eredmeny = tag.Item2;
+
+
+            double szam;
+            if (double.TryParse(Keresett.Text, out szam))
+            {
+                Eredmeny.Text = $"Keresett elem előfordulása: {Tetelek.Megszamolas(MostTomb, szam)}";
+            }
+            else
+            {
+                Keresett.Text = "Számot adjon meg!";
+            }
+        }
+
+        private void Keresett_Leave(object sender, EventArgs e)
+        {
+            TextBox kuldo = sender as TextBox;
+            string nev = kuldo.Tag as string;
+            if (string.IsNullOrWhiteSpace(kuldo.Text))
+            {
+                if (nev == "Also")
+                {
+                    kuldo.Text = "Számok alsó határa";
+                } else if (nev == "Felso")
+                {
+                    kuldo.Text = "Számok felső határa";
+                }
+                else
+                {
+                    kuldo.Text = "Keresett elem";
+                }
+            }
+        }
+
+        private void Keresett_Enter(object sender, EventArgs e)
+        {
+            TextBox Keresett = sender as TextBox;
+            Keresett.Text = "";
         }
         private void Elemszam_ValueChanged(object sender, EventArgs e)
         {
             NumericUpDown elemszam = sender as NumericUpDown;
-            MostTomb = new double[(int)elemszam.Value];
-            for (int i = 0; i < MostTomb.Length; i++)
+            if (elemszam.Value <= elemszam.Maximum)
             {
-                MostTomb[i] = r.Next();
+                MostTomb = new double[(int)elemszam.Value];
+                for (int i = 0; i < MostTomb.Length; i++)
+                {
+                    MostTomb[i] = r.NextDouble() * int.MaxValue;
+                }
             }
         }
-
+        #endregion
         static string[] Beolvasas(string FileNev)
         {
             List<string> szoveg = new List<string>();
