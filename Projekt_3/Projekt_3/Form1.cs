@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,33 +90,36 @@ namespace Projekt_3
             {
                 Megszamolas();
             }
-
         }
         #region Megszamolas
+
+        TextBox Keresett;
+        TextBox Also;
+        TextBox Felso;
+        Label Eredmeny;
         private void Megszamolas()
         {
-            TextBox Also = new TextBox()
+            Also = new TextBox()
             {
                 Parent = Container.Panel2,
                 Location = new Point(20, 20),
                 Size = new Size(180, 40),
                 Text = "Számok alsó határa",
-                Tag = "Also"
             };
-            Also.Enter += Keresett_Enter;
-            Also.Leave += Keresett_Leave;
-
-            TextBox Felso = new TextBox()
+            Also.Tag = Also.Name;
+            Also.Enter += Also_Enter;
+            Also.Leave += Also_Leave;
+            
+            Felso = new TextBox()
             {
                 Parent = Container.Panel2,
                 Location = new Point(20, Also.Location.Y + Also.Size.Height + 20),
                 Size = new Size(180, 40),
                 Text = "Számok felső határa",
-                Tag = "Felso"
             };
-
-            Felso.Enter += Keresett_Enter;
-            Felso.Leave += Keresett_Leave;
+            Felso.Tag = Felso.Name;
+            Felso.Enter += Felso_Enter;
+            Felso.Leave += Felso_Leave;
 
             NumericUpDown Elemszam = new NumericUpDown()
             {
@@ -127,14 +131,15 @@ namespace Projekt_3
             };
             Elemszam.ValueChanged += Elemszam_ValueChanged;
 
-            TextBox Keresett = new TextBox()
+            Keresett = new TextBox()
             {
                 Parent = Container.Panel2,
                 Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
                 Size = new Size(180, 40),
                 Text = "Keresett elem",
-                Tag = "Keresett"
+                Enabled = false,
             };
+            Keresett.Tag = Keresett.Name;
             Keresett.Enter += Keresett_Enter;
             Keresett.Leave += Keresett_Leave;
 
@@ -146,70 +151,132 @@ namespace Projekt_3
                 Text = "OK",
             };
             OK.Click += OK_Click;
-
-            Label Eredmeny = new Label()
+            Eredmeny = new Label()
             {
                 Parent = Container.Panel2,
                 Location = new Point(20, OK.Location.Y + OK.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Keresett elem előfordulása: "
+                Size = new Size(500, 40),
+                Text = "Keresett elem előfordulása: ",
             };
-            OK.Tag = Tuple.Create(Keresett, Eredmeny);
         }
+
+        int? also, felso, elemszam;
+        double? keresett;
+
         private void OK_Click(object sender, EventArgs e)
         {
-            Button ok = sender as Button;
-            var tag = ok.Tag as Tuple<TextBox, Label>;
-            TextBox Keresett = tag.Item1;
-            Label Eredmeny = tag.Item2;
-
-
-            double szam;
-            if (double.TryParse(Keresett.Text, out szam))
+            if (also.HasValue && felso.HasValue && keresett.HasValue && elemszam.HasValue)
             {
-                Eredmeny.Text = $"Keresett elem előfordulása: {Tetelek.Megszamolas(MostTomb, szam)}";
+                if (also > felso)
+                {
+                    int? temp = felso;
+                    felso = also;
+                    also = temp;
+                }
+                MostTomb = new double[(int)elemszam];
+                for (int i = 0;i < elemszam;i++)
+                {
+                    MostTomb[i] = r.Next((int)also, (int)felso);
+                }
+                double keres = (double)keresett;
+                int talalat = Tetelek.Megszamolas(MostTomb, keres);
+                Eredmeny.Text = $"Keresett elem előfordulása: { talalat}db";
+            }
+        }
+
+        private void Elemszam_ValueChanged(object senderr, EventArgs e)
+        {
+            NumericUpDown sender = senderr as NumericUpDown;
+            elemszam = (int)sender.Value;
+        }
+
+        private void Keresett_Leave(object senderr, EventArgs e)
+        {
+            TextBox sender = senderr as TextBox;
+            if (!int.TryParse(sender.Text, out int alsoHatar) && !string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Érvénytelen érték!";
+            }
+            else if (string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Keresett elem";
+            }
+            else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue || int.Parse(sender.Text) > felso || int.Parse(sender.Text) < also)
+            {
+                keresett = int.Parse(sender.Text);
+            }
+        }
+        private void Keresett_Enter(object senderr, EventArgs e)
+        {
+            TextBox sender = senderr as TextBox;
+            if (sender.Text == "Keresett elem" || sender.Text == "Érvénytelen érték!")
+            {
+                sender.Text = "";
+            }
+        }
+        private void Felso_Leave(object senderr, EventArgs e)
+        {
+            TextBox sender = senderr as TextBox;
+            if (!int.TryParse(sender.Text, out int alsoHatar) && !string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Érvénytelen érték!";
+            }
+            else if (string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Számok felső határa";
+            }
+            else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue)
+            {
+                felso = int.Parse(sender.Text);
+            }
+            if (also != null && felso != null)
+            {
+                Keresett.Enabled = true;
             }
             else
             {
-                Keresett.Text = "Számot adjon meg!";
+                Keresett.Enabled = false;
             }
         }
 
-        private void Keresett_Leave(object sender, EventArgs e)
+        private void Felso_Enter(object senderr, EventArgs e)
         {
-            TextBox kuldo = sender as TextBox;
-            string nev = kuldo.Tag as string;
-            if (string.IsNullOrWhiteSpace(kuldo.Text))
+            TextBox sender = senderr as TextBox;
+            if (sender.Text == "Számok felső határa" || sender.Text == "Érvénytelen érték!")
             {
-                if (nev == "Also")
-                {
-                    kuldo.Text = "Számok alsó határa";
-                } else if (nev == "Felso")
-                {
-                    kuldo.Text = "Számok felső határa";
-                }
-                else
-                {
-                    kuldo.Text = "Keresett elem";
-                }
+                sender.Text = "";
+            }
+        }
+        private void Also_Leave(object senderr, EventArgs e)
+        {
+            TextBox sender = senderr as TextBox;
+            if (!int.TryParse(sender.Text, out int alsoHatar) && !string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Érvénytelen érték!";
+            }
+            else if (string.IsNullOrWhiteSpace(sender.Text))
+            {
+                sender.Text = "Számok alsó határa";
+            } else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue)
+            {
+                also = int.Parse(sender.Text);
+            }
+            if (also != null && felso != null)
+            {
+                Keresett.Enabled = true;
+            }
+            else
+            {
+                Keresett.Enabled = false;
             }
         }
 
-        private void Keresett_Enter(object sender, EventArgs e)
+        private void Also_Enter(object senderr, EventArgs e)
         {
-            TextBox Keresett = sender as TextBox;
-            Keresett.Text = "";
-        }
-        private void Elemszam_ValueChanged(object sender, EventArgs e)
-        {
-            NumericUpDown elemszam = sender as NumericUpDown;
-            if (elemszam.Value <= elemszam.Maximum)
+            TextBox sender = senderr as TextBox;
+            if (sender.Text == "Számok alsó határa" || sender.Text == "Érvénytelen érték!")
             {
-                MostTomb = new double[(int)elemszam.Value];
-                for (int i = 0; i < MostTomb.Length; i++)
-                {
-                    MostTomb[i] = r.NextDouble() * int.MaxValue;
-                }
+                sender.Text = "";
             }
         }
         #endregion

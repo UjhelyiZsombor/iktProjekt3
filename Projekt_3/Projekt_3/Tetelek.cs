@@ -5,7 +5,7 @@ namespace Projekt_3
 {
     internal class Tetelek
     {
-        public static double Megszamolas(double[] tomb, double keresett)
+        public static int Megszamolas(double[] tomb, double keresett)
         {
             int c = 0;
             for (int i = 0; i < tomb.Length; i++)
