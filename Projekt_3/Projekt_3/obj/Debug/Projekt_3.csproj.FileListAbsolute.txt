@@ -41,3 +41,14 @@ C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Proje
 C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
 C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
 C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe.config
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\bin\Debug\Projekt_3.pdb
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.AssemblyReference.cache
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe.config
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Form1.resources
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Properties.Resources.resources
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.GenerateResource.cache
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
+C:\Users\szm82\Source\Repos\iktProjekt3\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
