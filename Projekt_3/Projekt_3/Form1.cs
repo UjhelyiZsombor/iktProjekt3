@@ -17,14 +17,22 @@ using System.Windows.Forms;
 namespace Projekt_3
 {
     public partial class Form1 : Form
-    {
-        SplitContainer Container;
+    {  
         string[] GombFeliratok = Beolvasas("GombFeliratok.txt");
-        string[] LabelFeliratok = Beolvasas("LabelFeliratok.txt");
-        Label[] Labelek = new Label[4];
+        string[] KategoriaFeliratok = Beolvasas("LabelFeliratok.txt");
+        Button[] KategoriaGombok = new Button[4];
+        Button Vissza;
         Button[] Gombok = new Button[8];
         double[] MostTomb;
         Random r = new Random();
+        TabControl TabControl;
+        TabPage MegszamolasPage;
+        TabPage EldontesPage;
+        Panel Panel;
+        ListBox KodMegj;
+
+        Button Fomenu;
+        Button Kod;
         public Form1()
         {
             InitializeComponent();
@@ -33,59 +41,111 @@ namespace Projekt_3
         {
             Text = "Alaptetelek";
             Font = new Font("Segoe UI", 12f);
-            Size = new Size(1000, 630);
+            Size = new Size(620, 500);
             FormBorderStyle = FormBorderStyle.Fixed3D;
 
-            Container = new SplitContainer()
+            Panel = new Panel()
             {
                 Parent = this,
-                Dock = DockStyle.Fill,
-                IsSplitterFixed = true,
+                Location = new Point(0, 0),
+                Size = new Size(Width, Height),
+                BackColor = Color.White
             };
-            Container.SplitterDistance = 200;
+            KodMegj = new ListBox()
+            {
+                Parent = this,
+                Location = new Point(Panel.Width, 0),
+                Size = new Size(300, Height),
+                BackColor = Color.LightGray,
+                Visible = false
+            };
+            for (int i = 0; i < KategoriaGombok.Length; i++)
+            {
+                KategoriaGombok[i] = new Button()
+                {
+                    Parent = Panel,
+                    Text = $"{KategoriaFeliratok[i]}",
+                    Size = new Size(200, 50),
+                    Location = new Point(Panel.Width / 2 - 100, Panel.Height / 2 - 160 + i * 60),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                KategoriaGombok[i].Click += KategoriaGombok_Click;
+            }
+            Vissza = new Button()
+            {
+                Parent = Panel,
+                Text = "Kilépés",
+                Size = new Size(200, 50),
+                Location = new Point(Panel.Width / 2 - 100, KategoriaGombok[3].Location.Y + 60),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            Vissza.Click += (senderr, args) => Application.Exit();
 
-            for (int i = 0; i < Gombok.Length; i++)
+            Fomenu = new Button()
             {
-                Gombok[i] = new Button()
-                {
-                    Parent = Container.Panel1,
-                    Size = new Size(180, 40),
-                    Text = GombFeliratok[i]
-                };
-                if (i % 2 == 0 && i != 0)
-                {
-                    Gombok[i].Location = new Point(10, Gombok[i - 1].Location.Y + 40 + 70);
-                } else if (i % 2 != 0)
-                {
-                    Gombok[i].Location = new Point(10, Gombok[i - 1].Location.Y + 40);
-                } else
-                {
-                    Gombok[i].Location = new Point(10, 40);
-                }
-                Gombok[i].Click += Gomb_Click;
-            }
-            for (int i = 0; i < Labelek.Length; i++)
+                Text = "Főmenü",
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            Fomenu.Click += Fomenu_Click;
+
+            Kod = new Button()
             {
-            
-                Labelek[i] = new Label()
-                {
-                    Parent = Container.Panel1,
-                    Size = new Size(180, 30),
-                    Text = LabelFeliratok[i]
-                };
-            }
-            Labelek[0].Location = new Point(10, 10);
-            Labelek[1].Location = new Point(10, Gombok[2].Location.Y - Labelek[1].Height);
-            Labelek[2].Location = new Point(10, Gombok[4].Location.Y - Labelek[2].Height);
-            Labelek[3].Location = new Point(10, Gombok[6].Location.Y - Labelek[3].Height);
+                Text = "Kód",
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            Kod.Click += Kod_Click;
+
+            TabControl = new TabControl()
+            {
+                Parent = this,
+                Size = new Size(600, Height),
+                Location = new Point(0, 0),
+                Visible = false,
+            };         
         }
 
-        private void Gomb_Click(object sender, EventArgs e)
+        private void Kod_Click(object sender, EventArgs e)
         {
-            Container.Panel2.Controls.Clear();
-            if (sender == Gombok[0])
+            if (KodMegj.Visible == false)
             {
-                Megszamolas();
+                KodMegj.Visible = true;
+            }
+            else
+            {
+                KodMegj.Visible = false;
+            }
+        }
+
+        private void Fomenu_Click(object sender, EventArgs e)
+        {
+            Panel.Visible = true;
+            TabControl.Visible = false;
+            TabControl.TabPages.Clear();
+        }
+
+        private void KategoriaGombok_Click(object senderr, EventArgs e)
+        {
+            Button sender = senderr as Button;
+            if (sender.Text == "Elemi programozási tételek")
+            {
+                TabControl.Visible = true;
+                Panel.Visible = false;
+                MegszamolasPage = new TabPage("Megszámolás");
+                TabControl.TabPages.Add(MegszamolasPage);
+                EldontesPage = new TabPage("Eldöntés");
+                TabControl.TabPages.Add(EldontesPage);
+
+                if (TabControl.SelectedTab == MegszamolasPage)
+                {
+                    Megszamolas();
+                    Fomenu.Parent = MegszamolasPage;
+                    Fomenu.Location = new Point(MegszamolasPage.Width-80, MegszamolasPage.Height-80);
+                    Kod.Parent = MegszamolasPage;
+                    Kod.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80 - Fomenu.Height);
+
+                }
             }
         }
         #region Megszamolas
@@ -97,7 +157,7 @@ namespace Projekt_3
         {
             Also = new TextBox()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Location = new Point(20, 20),
                 Size = new Size(180, 40),
                 Text = "Számok alsó határa",
@@ -108,7 +168,7 @@ namespace Projekt_3
             
             Felso = new TextBox()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Location = new Point(20, Also.Location.Y + Also.Size.Height + 20),
                 Size = new Size(180, 40),
                 Text = "Számok felső határa"
@@ -119,7 +179,7 @@ namespace Projekt_3
 
             NumericUpDown Elemszam = new NumericUpDown()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Minimum = 1,
                 Maximum = 10000000,
                 Location = new Point(20, Felso.Location.Y + Felso.Size.Height + 20),
@@ -129,7 +189,7 @@ namespace Projekt_3
 
             Keresett = new TextBox()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
                 Size = new Size(180, 40),
                 Text = "Keresett elem",
@@ -141,7 +201,7 @@ namespace Projekt_3
 
             Button OK = new Button()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Location = new Point(20, Keresett.Location.Y + Keresett.Size.Height + 20),
                 Size = new Size(180, 40),
                 Text = "OK",
@@ -149,7 +209,7 @@ namespace Projekt_3
             OK.Click += OK_Click;
             Eredmeny = new Label()
             {
-                Parent = Container.Panel2,
+                Parent = MegszamolasPage,
                 Location = new Point(20, OK.Location.Y + OK.Size.Height + 20),
                 Size = new Size(500, 40),
                 Text = "Keresett elem előfordulása: ",
