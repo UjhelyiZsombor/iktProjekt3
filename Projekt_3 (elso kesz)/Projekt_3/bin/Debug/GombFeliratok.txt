@@ -1,8 +1,0 @@
-Megszámolás
-Eldöntés
-Másolás
-Metszet
-Egyszerű cserés
-MinMax
-Lineáris keresés
-Bináris keresés
