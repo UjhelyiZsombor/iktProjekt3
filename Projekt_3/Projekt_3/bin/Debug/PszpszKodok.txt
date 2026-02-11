@@ -1,0 +1,102 @@
+SEP
+Függvény Megszamolas(tömb, keresett)
+    c = 0
+    CIKLUS i = 0-tól (tömb.hossz - 1)-ig
+        HA tömb[i] == keresett AKKOR
+            c = c + 1
+        VÉGE HA
+    VÉGE CIKLUS
+    VISSZA c
+VÉGE Függvény
+SEP
+Függvény Eldontes(tömb, keresett)
+    vanE = HAMIS
+    CIKLUS MINDEN elem A tömb-ben
+        HA elem == keresett AKKOR
+            vanE = IGAZ
+        VÉGE HA
+    VÉGE CIKLUS
+    VISSZA vanE
+VÉGE Függvény
+SEP
+Függvény Eldontes(tömb, keresett)
+    vanE = HAMIS
+    CIKLUS MINDEN elem A tömb-ben
+        HA elem == keresett AKKOR
+            vanE = IGAZ
+        VÉGE HA
+    VÉGE CIKLUS
+    VISSZA vanE
+VÉGE Függvény
+SEP
+Függvény Metszet(A_tömb, B_tömb)
+    metszet_lista = ÚJ LISTA
+    CIKLUS i = 0-tól (A_tömb.hossz - 1)-ig
+        CIKLUS MINDEN elem A B_tömb-ben
+            HA A_tömb[i] == elem AKKOR
+                metszet_lista.Hozzáad(elem)
+            VÉGE HA
+        VÉGE CIKLUS
+    VÉGE CIKLUS
+    VISSZA metszet_lista tömbbé alakítva
+VÉGE Függvény
+SEP
+Függvény EgyszeruCseres(tömb)
+    CIKLUS i = 0-tól (tömb.hossz - 2)-ig
+        CIKLUS j = (i + 1)-től (tömb.hossz - 1)-ig
+            HA tömb[i] > tömb[j] AKKOR
+                seged = tömbi[j]
+                tömb[j] = tömb[i]
+                tömb[i] = seged
+            VÉGE HA
+        VÉGE CIKLUS
+    VÉGE CIKLUS
+    VISSZA tömb
+VÉGE Függvény
+SEP
+Függvény MinMaxRendezes(tömb)
+    CIKLUS i = 0-tól (tömb.hossz - 2)-ig
+        minimum_index = i
+        CIKLUS j = (i + 1)-től (tömb.hossz - 1)-ig
+            HA tömb[minimum_index] > tömb[j] AKKOR
+                minimum_index = j
+            VÉGE HA
+        VÉGE CIKLUS
+        
+        // Csere csak a belső ciklus után!
+        seged = tömb[i]
+        tömb[i] = tömb[minimum_index]
+        tömb[minimum_index] = seged
+    VÉGE CIKLUS
+    VISSZA tömb
+VÉGE Függvény
+SEP
+Függvény LinearisKereses(tömb, keresett_elem)
+    index = -1
+    CIKLUS i = 0-tól (tömb.hossz - 1)-ig
+        HA tömb[i] == keresett_elem AKKOR
+            index = i
+            CIKLUS MEGSZAKÍTÁSA (break)
+        VÉGE HA
+    VÉGE CIKLUS
+    VISSZA index
+VÉGE Függvény
+SEP
+Függvény BinarisKereses(tömb, keresett_ertek)
+    TÖMB RENDEZÉSE (szükséges előfeltétel)
+    eleje = 0
+    vege = tömb.hossz - 1
+    
+    AMÍG eleje <= vege CIKLUS
+        közép = (eleje + vege) egész osztva 2-vel
+        HA tömb[közép] == keresett_ertek AKKOR
+            VISSZA közép
+        KÜLÖNBEN HA tömb[közép] < keresett_ertek AKKOR
+            eleje = közép + 1
+        KÜLÖNBEN
+            vege = közép - 1
+        VÉGE HA
+    VÉGE CIKLUS
+    VISSZA -1
+VÉGE Függvény
+SEP

@@ -30,6 +30,7 @@ namespace Projekt_3
         TabPage EldontesPage;
         Panel Panel;
         ListBox KodMegj;
+        string[][] PszKodok = new string[8][]; 
 
         Button Fomenu;
         Button Kod;
@@ -54,7 +55,7 @@ namespace Projekt_3
             KodMegj = new ListBox()
             {
                 Parent = this,
-                Size = new Size(300, Height),
+                Size = new Size(500, Height),
                 BackColor = Color.LightGray,
                 Visible = false
             };
@@ -110,12 +111,14 @@ namespace Projekt_3
             {
                 KodMegj.Visible = true;
                 KodMegj.Location = new Point(TabControl.Width, 0);
-                Width += 300;
+                Width += 500;
+                Kodok(Beolvasas("PszpszKodok.txt"));
+                KodMegj.DataSource = PszKodok[7];
             }
             else
             {
                 KodMegj.Visible = false;
-                Width -= 300;
+                Width -= 500;
             }
         }
         private void Fomenu_Click(object sender, EventArgs e)
@@ -142,7 +145,6 @@ namespace Projekt_3
                     Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
                     Kod.Parent = MegszamolasPage;
                     Kod.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80 - Fomenu.Height);
-
                 }
             }
         }
@@ -318,6 +320,30 @@ namespace Projekt_3
                 szoveg.Add(adatok[i]);
             }
             return szoveg.ToArray();
+        }
+        void Kodok(string[] adat)
+        {
+            int j = 0;
+
+            for (int i = 0; i < adat.Length; i++)
+            {
+                if (adat[i] == "SEP")
+                {
+                    i++;
+                    List<string> most = new List<string>();
+                    while (i < adat.Length && adat[i] != "SEP")
+                    {
+                        most.Add(adat[i]);
+                        i++;
+                    }
+                    if (most.Count > 0)
+                    {
+                        PszKodok[j] = most.ToArray();
+                        j++;
+                    }
+                    i--;
+                }
+            }
         }
     }
 }

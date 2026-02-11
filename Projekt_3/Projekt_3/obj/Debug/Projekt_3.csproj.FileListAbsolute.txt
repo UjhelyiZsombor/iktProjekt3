@@ -30,3 +30,14 @@ C:\Users\3041TAN-09\Downloads\UjhelyiZsombor\asd\Projekt_3\Projekt_3\obj\Debug\P
 C:\Users\3041TAN-09\Downloads\UjhelyiZsombor\asd\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
 C:\Users\3041TAN-09\Downloads\UjhelyiZsombor\asd\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
 C:\Users\3041TAN-09\Downloads\UjhelyiZsombor\asd\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe.config
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\bin\Debug\Projekt_3.pdb
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.AssemblyReference.cache
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe.config
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Form1.resources
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Properties.Resources.resources
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.GenerateResource.cache
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
+C:\Users\3111TAN-08\Downloads\UjhelyiZsombor\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
