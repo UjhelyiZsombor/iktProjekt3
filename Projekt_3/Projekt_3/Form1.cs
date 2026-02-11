@@ -17,7 +17,7 @@ using System.Windows.Forms;
 namespace Projekt_3
 {
     public partial class Form1 : Form
-    {  
+    {
         string[] GombFeliratok = Beolvasas("GombFeliratok.txt");
         string[] KategoriaFeliratok = Beolvasas("LabelFeliratok.txt");
         Button[] KategoriaGombok = new Button[4];
@@ -50,7 +50,6 @@ namespace Projekt_3
                 Parent = this,
                 Location = new Point(0, 0),
                 Size = new Size(Width, Height),
-                BackColor = Color.White
             };
             KodMegj = new ListBox()
             {
@@ -67,7 +66,7 @@ namespace Projekt_3
                     Text = $"{KategoriaFeliratok[i]}",
                     Size = new Size(200, 50),
                     Location = new Point(Panel.Width / 2 - 100, Panel.Height / 2 - 160 + i * 60),
-                    TextAlign = ContentAlignment.MiddleCenter
+                    TextAlign = ContentAlignment.MiddleCenter,
                 };
                 KategoriaGombok[i].Click += KategoriaGombok_Click;
             }
@@ -77,7 +76,7 @@ namespace Projekt_3
                 Text = "Kilépés",
                 Size = new Size(200, 50),
                 Location = new Point(Panel.Width / 2 - 100, KategoriaGombok[3].Location.Y + 60),
-                TextAlign = ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleCenter,
             };
             Vissza.Click += (senderr, args) => Application.Exit();
 
@@ -103,9 +102,8 @@ namespace Projekt_3
                 Size = new Size(600, Height),
                 Location = new Point(0, 0),
                 Visible = false,
-            };         
+            };
         }
-
         private void Kod_Click(object sender, EventArgs e)
         {
             if (KodMegj.Visible == false)
@@ -120,14 +118,12 @@ namespace Projekt_3
                 Width -= 300;
             }
         }
-
         private void Fomenu_Click(object sender, EventArgs e)
         {
             Panel.Visible = true;
             TabControl.Visible = false;
             TabControl.TabPages.Clear();
         }
-
         private void KategoriaGombok_Click(object senderr, EventArgs e)
         {
             Button sender = senderr as Button;
@@ -139,12 +135,11 @@ namespace Projekt_3
                 TabControl.TabPages.Add(MegszamolasPage);
                 EldontesPage = new TabPage("Eldöntés");
                 TabControl.TabPages.Add(EldontesPage);
-
                 if (TabControl.SelectedTab == MegszamolasPage)
                 {
                     Megszamolas();
                     Fomenu.Parent = MegszamolasPage;
-                    Fomenu.Location = new Point(MegszamolasPage.Width-80, MegszamolasPage.Height-80);
+                    Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
                     Kod.Parent = MegszamolasPage;
                     Kod.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80 - Fomenu.Height);
 
@@ -168,7 +163,7 @@ namespace Projekt_3
             Also.Tag = "Also";
             Also.Enter += TextBox_Enter;
             Also.Leave += TextBox_Leave;
-            
+
             Felso = new TextBox()
             {
                 Parent = MegszamolasPage,
@@ -233,9 +228,9 @@ namespace Projekt_3
                     also = temp;
                 }
                 MostTomb = new double[(int)elemszam];
-                for (int i = 0;i < elemszam;i++)
+                for (int i = 0; i < elemszam; i++)
                 {
-                    MostTomb[i] = r.Next((int)also, (int)felso) * Math.Round(r.NextDouble() + 1,1);
+                    MostTomb[i] = r.Next((int)also, (int)felso) * Math.Round(r.NextDouble() + 1, 1);
                 }
                 double keres = (double)keresett;
                 int talalat = Tetelek.Megszamolas(MostTomb, keres);
@@ -265,7 +260,8 @@ namespace Projekt_3
             if (sender.Tag.ToString() == "Also")
             {
                 text = "Számok alsó határa";
-            } else
+            }
+            else
             {
                 text = "Számok felső határa";
             }
@@ -284,7 +280,8 @@ namespace Projekt_3
                 if (sender.Tag.ToString() == "Also")
                 {
                     also = int.Parse(sender.Text);
-                } else
+                }
+                else
                 {
                     felso = int.Parse(sender.Text);
                 }
