@@ -1,0 +1,4 @@
+Elemi programozási tételek
+Összetett programozási tételek
+Rendezések
+Keresések
