@@ -43,6 +43,7 @@ namespace Projekt_3
             Font = new Font("Segoe UI", 12f);
             Size = new Size(620, 500);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            MaximizeBox = false;
 
             Panel = new Panel()
             {
@@ -54,7 +55,6 @@ namespace Projekt_3
             KodMegj = new ListBox()
             {
                 Parent = this,
-                Location = new Point(Panel.Width, 0),
                 Size = new Size(300, Height),
                 BackColor = Color.LightGray,
                 Visible = false
@@ -111,10 +111,13 @@ namespace Projekt_3
             if (KodMegj.Visible == false)
             {
                 KodMegj.Visible = true;
+                KodMegj.Location = new Point(TabControl.Width, 0);
+                Width += 300;
             }
             else
             {
                 KodMegj.Visible = false;
+                Width -= 300;
             }
         }
 
