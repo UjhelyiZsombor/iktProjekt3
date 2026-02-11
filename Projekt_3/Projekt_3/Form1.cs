@@ -24,6 +24,7 @@ namespace Projekt_3
         Button Vissza;
         Button[] Gombok = new Button[8];
         double[] MostTomb;
+        double[] MostTomb2;
         Random r = new Random();
         TabControl TabControl;
         TabPage MegszamolasPage;
@@ -195,6 +196,7 @@ namespace Projekt_3
                 TabControl.TabPages.Add(MasolasPage);
                 MetszetPage = new TabPage("Metszet");
                 TabControl.TabPages.Add(MetszetPage);
+                if (TabControl.SelectedTab == MasolasPage)
                 {
                     Masolas();
                     Fomenu.Parent = MasolasPage;
@@ -202,6 +204,25 @@ namespace Projekt_3
                     Kod.Parent = MasolasPage;
                     Kod.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80 - Fomenu.Height);
                 }
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == MasolasPage)
+                    {
+                        Masolas();
+                        Fomenu.Parent = MasolasPage;
+                        Fomenu.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80);
+                        Kod.Parent = MasolasPage;
+                        Kod.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80 - Fomenu.Height);
+                    }
+                    else if (TabControl.SelectedTab == MetszetPage)
+                    {
+                        Metszet();
+                        Fomenu.Parent = MetszetPage;
+                        Fomenu.Location = new Point(MetszetPage.Width - 80, MetszetPage.Height - 80);
+                        Kod.Parent = MetszetPage;
+                        Kod.Location = new Point(MetszetPage.Width - 80, MetszetPage.Height - 80 - Fomenu.Height);
+                    }
+                };
             }
         }
 
@@ -218,6 +239,10 @@ namespace Projekt_3
         TextBox Also2;
         TextBox Felso2;
         Label Eredmeny2;
+        #endregion
+        #region Metszet
+        TextBox Also3;
+        TextBox Felso3;
         #endregion
         private void Megszamolas()
         {
@@ -393,6 +418,56 @@ namespace Projekt_3
             };
         }
 
+        private void Metszet()
+        {
+            Also3 = new TextBox()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, 20),
+                Size = new Size(180, 40),
+                Text = "Számok alsó határa",
+            };
+            Also3.Tag = "Also3";
+            Also3.Enter += TextBox_Enter;
+            Also3.Leave += TextBox_Leave;
+
+            Felso3 = new TextBox()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Also3.Location.Y + Also3.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "Számok felső határa"
+            };
+            Felso3.Tag = "Felso3";
+            Felso3.Enter += TextBox_Enter;
+            Felso3.Leave += TextBox_Leave;
+
+            NumericUpDown Elemszam = new NumericUpDown()
+            {
+                Parent = MetszetPage,
+                Minimum = 1,
+                Maximum = 10000000,
+                Location = new Point(20, Felso3.Location.Y + Felso3.Size.Height + 20),
+                Size = new Size(180, 40),
+            };
+            Elemszam.ValueChanged += Elemszam_ValueChanged;
+            Button OK4 = new Button()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
+                Size = new Size(180, 40),
+                Text = "OK",
+            };
+            OK4.Click += OK4_Click;
+            Eredmeny = new Label()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, OK4.Location.Y + OK4.Size.Height + 20),
+                Size = new Size(500, 40),
+                Text = "Metszet: ",
+            };
+        }
+
 
 
         int? also, felso, elemszam;
@@ -433,7 +508,7 @@ namespace Projekt_3
                 MostTomb = new double[(int)elemszam];
                 for (int i = 0; i < elemszam; i++)
                 {
-                    MostTomb[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble(), 1);
+                    MostTomb[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
                 }
                 double[] talalat = Tetelek.Masolas(MostTomb);
                 Eredmeny.Text = "A másolt tömb: " + string.Join("; ", talalat);
@@ -461,6 +536,32 @@ namespace Projekt_3
             }
         }
 
+        private void OK4_Click(object sender, EventArgs e)
+        {
+            if (also.HasValue && felso.HasValue && elemszam.HasValue)
+            {
+                if (also > felso)
+                {
+                    int? temp = felso;
+                    felso = also;
+                    also = temp;
+                }
+
+                MostTomb = new double[(int)elemszam];
+                MostTomb2 = new double[(int)elemszam];
+                for (int i = 0; i < elemszam; i++)
+                {
+                    MostTomb[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
+                }
+                for (int i = 0; i < elemszam; i++)
+                {
+                    MostTomb2[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
+                }
+                double[] metszet = Tetelek.Metszet(MostTomb,MostTomb2);
+                Eredmeny.Text = "Metszet: " + string.Join("; ", metszet);
+            }
+        }
+
         private void Keresett_Leave(object senderr, EventArgs e)
         {
             TextBox sender = senderr as TextBox;
@@ -481,7 +582,7 @@ namespace Projekt_3
         {
             string text;
             TextBox sender = senderr as TextBox;
-            if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2")
+            if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2" || sender.Tag.ToString() == "Also3")
             {
                 text = "Számok alsó határa";
             }
@@ -501,7 +602,7 @@ namespace Projekt_3
             }
             else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue)
             {
-                if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2")
+                if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2" || sender.Tag.ToString() == "Also3")
                 {
                     also = int.Parse(sender.Text);
                 }
