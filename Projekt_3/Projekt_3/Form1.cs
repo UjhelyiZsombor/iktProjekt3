@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.AccessControl;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projekt_3
@@ -151,21 +141,23 @@ namespace Projekt_3
                 Kod.Location = new Point(20, nev.Height - 80 - Fomenu.Height);
             }
         }
+        void Beallitas2 (string elsoPage, string MasodikPage)
+        {
+            TabControl.Visible = true;
+            Panel.Visible = false;
+            TabControl.TabPages.Add(new TabPage(elsoPage));
+            TabControl.TabPages.Add(new TabPage(MasodikPage));
+        }
         private void KategoriaGombok_Click(object senderr, EventArgs e)
         {
             Button sender = senderr as Button;
             if (sender.Text == "Elemi programozási tételek")
             {
-                TabControl.Visible = true;
-                Panel.Visible = false;
-                MegszamolasPage = new TabPage("Megszámolás");
-                TabControl.TabPages.Add(MegszamolasPage);
-                EldontesPage = new TabPage("Eldöntés");
-                TabControl.TabPages.Add(EldontesPage);
-                if (TabControl.SelectedTab == MegszamolasPage)
-                {
-                    Beallitas(MegszamolasPage, false, Megszamolas, 0);
-                }
+                Beallitas2("Megszámolás", "Eldöntés");
+                MegszamolasPage = TabControl.TabPages[0];
+                EldontesPage = TabControl.TabPages[1];
+                Beallitas(MegszamolasPage, false, Megszamolas, 0);
+
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == MegszamolasPage)
@@ -180,16 +172,11 @@ namespace Projekt_3
             }
             else if (sender.Text == "Összetett programozási tételek")
             {
-                TabControl.Visible = true;
-                Panel.Visible = false;
-                MasolasPage = new TabPage("Másolás");
-                TabControl.TabPages.Add(MasolasPage);
-                MetszetPage = new TabPage("Metszet");
-                TabControl.TabPages.Add(MetszetPage);
-                if (TabControl.SelectedTab == MasolasPage)
-                {
-                    Beallitas(MasolasPage, false, Masolas, 2);
-                }
+                Beallitas2("Másolás", "Másolás");
+                MasolasPage = TabControl.TabPages[0];
+                MetszetPage = TabControl.TabPages[1];
+                Beallitas(MasolasPage, false, Masolas, 2);
+
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == MasolasPage)
@@ -204,16 +191,11 @@ namespace Projekt_3
             }
             else if (sender.Text == "Rendezések")
             {
-                TabControl.Visible = true;
-                Panel.Visible = false;
-                ECSPage = new TabPage("Egyszerű cserés rendezés");
-                TabControl.TabPages.Add(ECSPage);
-                MinMaxPage = new TabPage("MinMax rendezés");
-                TabControl.TabPages.Add(MinMaxPage);
-                if (TabControl.SelectedTab == ECSPage)
-                {
-                    Beallitas(ECSPage, false, ECS, 4);
-                }
+                Beallitas2("Egyszerű cserés rendezés", "MinMax rendezés");
+                ECSPage = TabControl.TabPages[0];
+                MinMaxPage = TabControl.TabPages[1];
+
+                Beallitas(ECSPage, false, ECS, 4);
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == ECSPage)
@@ -228,16 +210,12 @@ namespace Projekt_3
             }
             else if (sender.Text == "Keresések")
             {
-                TabControl.Visible = true;
-                Panel.Visible = false;
-                LinKerPage = new TabPage("Lineáris keresés");
-                TabControl.TabPages.Add(LinKerPage);
-                BinKerPage = new TabPage("Bináris keresés");
-                TabControl.TabPages.Add(BinKerPage);
+                Beallitas2("Lineáris keresés", "Bináris keresés");
+                LinKerPage = TabControl.TabPages[0];
+                BinKerPage = TabControl.TabPages[1];
                 if (TabControl.SelectedTab == LinKerPage)
-                {
-                    Beallitas(LinKerPage, false, LinKer, 6);
-                }
+
+                Beallitas(LinKerPage, false, LinKer, 6);
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == LinKerPage)
