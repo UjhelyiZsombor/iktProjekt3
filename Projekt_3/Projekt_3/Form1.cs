@@ -36,7 +36,7 @@ namespace Projekt_3
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
             CenterToScreen();
-            
+
             Panel = new Panel()
             {
                 Parent = this,
@@ -123,7 +123,63 @@ namespace Projekt_3
                 KodMegj.Visible = false;
             }
         }
+        private void KategoriaGombok_Click(object senderr, EventArgs e)
+        {
+            Button sender = senderr as Button;
+            if (sender.Text == "Elemi programozási tételek")
+            {
+                Beallitas2("Megszámolás", "Eldöntés");
+                MegszamolasPage = TabControl.TabPages[0];
+                EldontesPage = TabControl.TabPages[1];
+                Beallitas(MegszamolasPage, false, Megszamolas, 0);
 
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == MegszamolasPage) Beallitas(MegszamolasPage, false, Megszamolas, 0);
+                    else if (TabControl.SelectedTab == EldontesPage) Beallitas(EldontesPage, false, Eldontes, 1);
+                };
+            }
+            else if (sender.Text == "Összetett programozási tételek")
+            {
+                Beallitas2("Másolás", "Másolás");
+                MasolasPage = TabControl.TabPages[0];
+                MetszetPage = TabControl.TabPages[1];
+                Beallitas(MasolasPage, false, Masolas, 2);
+
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == MasolasPage) Beallitas(MasolasPage, false, Masolas, 2);
+                    else if (TabControl.SelectedTab == MetszetPage) Beallitas(MetszetPage, true, Metszet, 3);
+                };
+            }
+            else if (sender.Text == "Rendezések")
+            {
+                Beallitas2("Egyszerű cserés rendezés", "MinMax rendezés");
+                ECSPage = TabControl.TabPages[0];
+                MinMaxPage = TabControl.TabPages[1];
+
+                Beallitas(ECSPage, false, ECS, 4);
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == ECSPage) Beallitas(ECSPage, false, ECS, 4);
+                    else if (TabControl.SelectedTab == MinMaxPage) Beallitas(MinMaxPage, false, MinMax, 5);
+                };
+            }
+            else if (sender.Text == "Keresések")
+            {
+                Beallitas2("Lineáris keresés", "Bináris keresés");
+                LinKerPage = TabControl.TabPages[0];
+                BinKerPage = TabControl.TabPages[1];
+                if (TabControl.SelectedTab == LinKerPage)
+
+                    Beallitas(LinKerPage, false, LinKer, 6);
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == LinKerPage) Beallitas(LinKerPage, false, LinKer, 6);
+                    else if (TabControl.SelectedTab == BinKerPage) Beallitas(BinKerPage, false, BinKer, 7);
+                };
+            }
+        }
         void Beallitas(TabPage nev, bool bal, Action valami, int szam)
         {
             valami();
@@ -141,93 +197,12 @@ namespace Projekt_3
                 Kod.Location = new Point(20, nev.Height - 80 - Fomenu.Height);
             }
         }
-        void Beallitas2 (string elsoPage, string MasodikPage)
+        void Beallitas2(string elsoPage, string MasodikPage)
         {
             TabControl.Visible = true;
             Panel.Visible = false;
             TabControl.TabPages.Add(new TabPage(elsoPage));
             TabControl.TabPages.Add(new TabPage(MasodikPage));
-        }
-        private void KategoriaGombok_Click(object senderr, EventArgs e)
-        {
-            Button sender = senderr as Button;
-            if (sender.Text == "Elemi programozási tételek")
-            {
-                Beallitas2("Megszámolás", "Eldöntés");
-                MegszamolasPage = TabControl.TabPages[0];
-                EldontesPage = TabControl.TabPages[1];
-                Beallitas(MegszamolasPage, false, Megszamolas, 0);
-
-                TabControl.SelectedIndexChanged += (s, args) =>
-                {
-                    if (TabControl.SelectedTab == MegszamolasPage)
-                    {
-                        Beallitas(MegszamolasPage, false, Megszamolas, 0);
-                    }
-                    else if (TabControl.SelectedTab == EldontesPage)
-                    {
-                        Beallitas(EldontesPage, false, Eldontes, 1);
-                    }
-                };
-            }
-            else if (sender.Text == "Összetett programozási tételek")
-            {
-                Beallitas2("Másolás", "Másolás");
-                MasolasPage = TabControl.TabPages[0];
-                MetszetPage = TabControl.TabPages[1];
-                Beallitas(MasolasPage, false, Masolas, 2);
-
-                TabControl.SelectedIndexChanged += (s, args) =>
-                {
-                    if (TabControl.SelectedTab == MasolasPage)
-                    {
-                        Beallitas(MasolasPage, false, Masolas, 2);
-                    }
-                    else if (TabControl.SelectedTab == MetszetPage)
-                    {
-                        Beallitas(MetszetPage, true, Metszet, 3);
-                    }
-                };
-            }
-            else if (sender.Text == "Rendezések")
-            {
-                Beallitas2("Egyszerű cserés rendezés", "MinMax rendezés");
-                ECSPage = TabControl.TabPages[0];
-                MinMaxPage = TabControl.TabPages[1];
-
-                Beallitas(ECSPage, false, ECS, 4);
-                TabControl.SelectedIndexChanged += (s, args) =>
-                {
-                    if (TabControl.SelectedTab == ECSPage)
-                    {
-                        Beallitas(ECSPage, false, ECS, 4);
-                    }
-                    else if (TabControl.SelectedTab == MinMaxPage)
-                    {
-                        Beallitas(MinMaxPage, false, MinMax, 5);
-                    }
-                };
-            }
-            else if (sender.Text == "Keresések")
-            {
-                Beallitas2("Lineáris keresés", "Bináris keresés");
-                LinKerPage = TabControl.TabPages[0];
-                BinKerPage = TabControl.TabPages[1];
-                if (TabControl.SelectedTab == LinKerPage)
-
-                Beallitas(LinKerPage, false, LinKer, 6);
-                TabControl.SelectedIndexChanged += (s, args) =>
-                {
-                    if (TabControl.SelectedTab == LinKerPage)
-                    {
-                        Beallitas(LinKerPage, false, LinKer, 6);
-                    }
-                    else if (TabControl.SelectedTab == BinKerPage)
-                    {
-                        Beallitas(BinKerPage, false, BinKer, 7);
-                    }
-                };
-            }
         }
         #region Megszamolas
         private void Megszamolas()
@@ -412,7 +387,8 @@ namespace Projekt_3
                     if (eredemny)
                     {
                         Eredmeny.Text = "Az elem benne van a tömbben.";
-                    } else
+                    }
+                    else
                     {
                         Eredmeny.Text = "Az elem nincs benne a tömbben.";
                     }
@@ -426,7 +402,7 @@ namespace Projekt_3
             NumericUpDown Also, Felso, Elemszam;
             Label Eredmeny;
             Label[] Labelek = new Label[3];
-            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:"};
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:" };
             for (int i = 0; i < Labelek.Length; i++)
             {
                 Labelek[i] = new Label()
@@ -491,12 +467,12 @@ namespace Projekt_3
                 Parent = MasolasPage,
                 Text = "Eredeti tömb:",
                 AutoSize = true,
-                Location = new Point(Also.Right + 20,Labelek[0].Location.Y ),
+                Location = new Point(Also.Right + 20, Labelek[0].Location.Y),
             };
             TextBox EredetiTomb = new TextBox()
             {
                 Parent = MasolasPage,
-                Size  = new Size(350, 100),
+                Size = new Size(350, 100),
                 Location = new Point(EredetiTombLabel.Location.X, Also.Location.Y),
                 ScrollBars = ScrollBars.Vertical,
                 Multiline = true,
@@ -753,7 +729,7 @@ namespace Projekt_3
                 {
                     int[] elsotomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
                     ElsoTomb.Text = string.Join(", ", elsotomb);
-                    RendezettTomb.Text = string.Join (", ", Tetelek.egyszeruCseres(elsotomb));
+                    RendezettTomb.Text = string.Join(", ", Tetelek.egyszeruCseres(elsotomb));
                 }
             };
         }
@@ -953,11 +929,12 @@ namespace Projekt_3
                 Eredmeny.Text = "Keresett elem indexe: ";
                 if (Felso.Enabled && Keresett.Enabled)
                 {
-                    int szam =  Tetelek.LinearisKereses(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
+                    int szam = Tetelek.LinearisKereses(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
                     if (szam != -1)
                     {
                         Eredmeny.Text += szam;
-                    } else
+                    }
+                    else
                     {
                         Eredmeny.Text = "A keresett elem nincs benne a tömbben";
                     }
