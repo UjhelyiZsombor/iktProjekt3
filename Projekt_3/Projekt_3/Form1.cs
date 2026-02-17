@@ -103,6 +103,7 @@ namespace Projekt_3
                 Visible = false,
             };
             TabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
+            Kodok(Beolvasas("PszpszKodok.txt"));
         }
 
         private void TabControl_SelectedIndexChanged(object senderr, EventArgs e)
@@ -124,29 +125,6 @@ namespace Projekt_3
                 KodMegj.Visible = true;
                 KodMegj.Location = new Point(TabControl.Width, 0);
                 Width += 500;
-                Kodok(Beolvasas("PszpszKodok.txt"));
-                int kodIndex = 0;
-
-                if (TabControl.SelectedTab != null)
-                {
-                    string lapNeve = TabControl.SelectedTab.Text;
-
-                    switch (lapNeve)
-                    {
-                        case "Megszámolás": kodIndex = 0; break;
-                        case "Eldöntés": kodIndex = 1; break;
-                        case "Másolás": kodIndex = 2; break;
-                        case "Metszet": kodIndex = 3; break;
-                        case "Egyszerű cserés rendezés": kodIndex = 4; break;
-                        case "MinMax rendezés": kodIndex = 5; break;
-                        case "Lineéris keresés": kodIndex = 6; break;
-                        case "Bináris keresés": kodIndex = 7; break;
-                    }
-                }
-                if (PszKodok[kodIndex] != null)
-                {
-                    KodMegj.DataSource = PszKodok[kodIndex];
-                }
             }
             else
             {
@@ -179,6 +157,7 @@ namespace Projekt_3
                 if (TabControl.SelectedTab == MegszamolasPage)
                 {
                     Megszamolas();
+                    KodMegj.DataSource = PszKodok[0];
                     Fomenu.Parent = MegszamolasPage;
                     Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
                     Kod.Parent = MegszamolasPage;
@@ -189,6 +168,7 @@ namespace Projekt_3
                     if (TabControl.SelectedTab == MegszamolasPage)
                     {
                         Megszamolas();
+                        KodMegj.DataSource = PszKodok[0];
                         Fomenu.Parent = MegszamolasPage;
                         Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
                         Kod.Parent = MegszamolasPage;
@@ -197,6 +177,7 @@ namespace Projekt_3
                     else if (TabControl.SelectedTab == EldontesPage)
                     {
                         Eldontes();
+                        KodMegj.DataSource = PszKodok[1];
                         Fomenu.Parent = EldontesPage;
                         Fomenu.Location = new Point(EldontesPage.Width - 80, EldontesPage.Height - 80);
                         Kod.Parent = EldontesPage;
@@ -215,6 +196,7 @@ namespace Projekt_3
                 if (TabControl.SelectedTab == MasolasPage)
                 {
                     Masolas();
+                    KodMegj.DataSource = PszKodok[2];
                     Fomenu.Parent = MasolasPage;
                     Fomenu.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80);
                     Kod.Parent = MasolasPage;
@@ -225,6 +207,7 @@ namespace Projekt_3
                     if (TabControl.SelectedTab == MasolasPage)
                     {
                         Masolas();
+                        KodMegj.DataSource = PszKodok[2];
                         Fomenu.Parent = MasolasPage;
                         Fomenu.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80);
                         Kod.Parent = MasolasPage;
@@ -233,6 +216,7 @@ namespace Projekt_3
                     else if (TabControl.SelectedTab == MetszetPage)
                     {
                         Metszet();
+                        KodMegj.DataSource = PszKodok[3];
                         Fomenu.Parent = MetszetPage;
                         Fomenu.Location = new Point(20, MetszetPage.Height - 80);
                         Kod.Parent = MetszetPage;
@@ -251,6 +235,7 @@ namespace Projekt_3
                 if (TabControl.SelectedTab == ECSPage)
                 {
                     ECS();
+                    KodMegj.DataSource = PszKodok[4];
                     Fomenu.Parent = ECSPage;
                     Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
                     Kod.Parent = ECSPage;
@@ -261,6 +246,7 @@ namespace Projekt_3
                     if (TabControl.SelectedTab == ECSPage)
                     {
                         ECS();
+                        KodMegj.DataSource = PszKodok[4];
                         Fomenu.Parent = ECSPage;
                         Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
                         Kod.Parent = ECSPage;
@@ -269,6 +255,7 @@ namespace Projekt_3
                     else if (TabControl.SelectedTab == MinMaxPage)
                     {
                         MinMax();
+                        KodMegj.DataSource = PszKodok[5];
                         Fomenu.Parent = MinMaxPage;
                         Fomenu.Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 80);
                         Kod.Parent = MinMaxPage;
@@ -287,6 +274,7 @@ namespace Projekt_3
                 if (TabControl.SelectedTab == LinKerPage)
                 {
                     LinKer();
+                    KodMegj.DataSource = PszKodok[6];
                     Fomenu.Parent = LinKerPage;
                     Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
                     Kod.Parent = LinKerPage;
@@ -297,6 +285,7 @@ namespace Projekt_3
                     if (TabControl.SelectedTab == LinKerPage)
                     {
                         LinKer();
+                        KodMegj.DataSource = PszKodok[6];
                         Fomenu.Parent = LinKerPage;
                         Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
                         Kod.Parent = LinKerPage;
@@ -305,6 +294,7 @@ namespace Projekt_3
                     else if (TabControl.SelectedTab == BinKerPage)
                     {
                         BinKer();
+                        KodMegj.DataSource = PszKodok[7];
                         Fomenu.Parent = BinKerPage;
                         Fomenu.Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 80);
                         Kod.Parent = BinKerPage;
