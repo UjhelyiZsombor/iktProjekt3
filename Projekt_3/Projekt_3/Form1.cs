@@ -22,6 +22,11 @@ namespace Projekt_3
 
         Button Fomenu;
         Button Kod;
+
+        Button MenuGomb;
+        Panel BeolvasasPanel;
+
+        int[] MegadottFile;
         #endregion
         public Form1()
         {
@@ -96,8 +101,91 @@ namespace Projekt_3
                 Visible = false,
             };
             Kodok(Beolvasas("PszpszKodok.txt"));
+
+            Image kep = Image.FromFile("betoltes.png");
+            Bitmap kep2 = new Bitmap(kep, new Size(32, 32));
+            MenuGomb = new Button()
+            {
+                Parent = this,
+                Size = new Size(40, 40),
+                Image = kep2,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(Width - 80, 20)
+            };
+            MenuGomb.BringToFront();
+            MenuGomb.Click += MenuGomb_Click;
+            BeolvasasPanel = new Panel()
+            {
+                Parent = this,
+                Size = new Size(400, 110),
+                Location = new Point(Width/2 - 200, Height/2 - 100),
+                Visible = false,
+                BorderStyle = BorderStyle.FixedSingle
+            };
             #endregion
         }
+        private void MenuGomb_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in Panel.Controls) c.Hide();
+            BeolvasasPanel.Visible = true;
+            BeolvasasPanel.BringToFront();
+            Label BeolvasasLabel;
+            BeolvasasLabel = new Label()
+            {
+                Parent = BeolvasasPanel,
+                Location = new Point(20,20),
+                AutoSize = true,
+                Text = "Meghajtó, elérési út, fájlnév, kiterjesztés: "
+            };
+            TextBox BeolvasasTextbox;
+            BeolvasasTextbox = new TextBox()
+            {
+                Parent = BeolvasasPanel,
+                Location = new Point(20, BeolvasasLabel.Bottom + 10),
+                Size = new Size(200, 60)
+            };
+            Button BeolvasasButton;
+            BeolvasasButton = new Button()
+            {
+                Parent = BeolvasasPanel,
+                Size = new Size(50,BeolvasasTextbox.Height),
+                Location = new Point(BeolvasasTextbox.Right + 10, BeolvasasTextbox.Location.Y),
+                Text = "OK",
+                Tag = BeolvasasTextbox
+            };
+            BeolvasasButton.Click += BeolvasasButton_Click;
+            Button BeolvasasKilepes;
+            BeolvasasKilepes = new Button()
+            {
+                Parent = BeolvasasPanel,
+                Text = "Kilépés",
+                Location = new Point(BeolvasasPanel.Width - 100, BeolvasasTextbox.Location.Y),
+                Size = new Size(80, BeolvasasTextbox.Height),
+            };
+            BeolvasasKilepes.Click += BeolvasasKilepes_Click;
+        }
+
+        private void BeolvasasButton_Click(object sender, EventArgs e)
+        {
+            Button senderr = sender as Button;
+            TextBox asd = senderr.Tag as TextBox;
+            
+            if (File.Exists(asd.Text))
+            {
+                MegadottFile = FelhasznaloOlvasas(asd.Text);
+                MessageBox.Show(string.Join(",", MegadottFile));
+            } else
+            {
+                MessageBox.Show("A fájl nem található!");
+            }
+        }
+
+        private void BeolvasasKilepes_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in Panel.Controls) c.Show();
+            BeolvasasPanel.Visible = false;
+        }
+
         private void Kod_Click(object sender, EventArgs e)
         {
             if (KodMegj.Visible == false)
@@ -116,6 +204,7 @@ namespace Projekt_3
         {
             Panel.Visible = true;
             TabControl.Visible = false;
+            MenuGomb.Visible = true;
             TabControl.TabPages.Clear();
             if (KodMegj.Visible)
             {
@@ -126,6 +215,7 @@ namespace Projekt_3
         private void KategoriaGombok_Click(object senderr, EventArgs e)
         {
             Button sender = senderr as Button;
+            MenuGomb.Visible = false;
             if (sender.Text == "Elemi programozási tételek")
             {
                 Beallitas2("Megszámolás", "Eldöntés");
@@ -1044,6 +1134,20 @@ namespace Projekt_3
         }
         #endregion
         #region Egyeb
+        static int[] FelhasznaloOlvasas(string fileNev)
+        {
+            List<int> szamok = new List<int>();
+            var adatok = File.ReadAllLines(fileNev, Encoding.UTF8);
+            for (int i = 0; i < adatok.Length; i++)
+            {
+                if (int.TryParse(adatok[i], out int szam))
+                {
+                    szamok.Add(szam);
+                }
+                else MessageBox.Show("Sikertelen beolvasás");
+            }
+            return szamok.ToArray();
+        }
         int[] TombGeneralas(int also, int felso, int elemszam)
         {
             int[] tomb = new int[elemszam];
