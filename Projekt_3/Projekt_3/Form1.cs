@@ -19,20 +19,12 @@ namespace Projekt_3
 {
     public partial class Form1 : Form
     {
-        string[] GombFeliratok = Beolvasas("GombFeliratok.txt");
         string[] KategoriaFeliratok = Beolvasas("LabelFeliratok.txt");
         Button[] KategoriaGombok = new Button[4];
         Button Vissza;
         Random r = new Random();
         TabControl TabControl;
-        TabPage MegszamolasPage;
-        TabPage EldontesPage;
-        TabPage MasolasPage;
-        TabPage MetszetPage;
-        TabPage ECSPage;
-        TabPage MinMaxPage;
-        TabPage LinKerPage;
-        TabPage BinKerPage;
+        TabPage MegszamolasPage, EldontesPage, MasolasPage, MetszetPage, ECSPage, MinMaxPage, LinKerPage, BinKerPage;
         Panel Panel;
         ListBox KodMegj;
         string[][] PszKodok = new string[8][];
@@ -51,6 +43,7 @@ namespace Projekt_3
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
             CenterToScreen();
+
             Panel = new Panel()
             {
                 Parent = this,
@@ -146,6 +139,8 @@ namespace Projekt_3
                         case "Metszet": kodIndex = 3; break;
                         case "Egyszerű cserés rendezés": kodIndex = 4; break;
                         case "MinMax rendezés": kodIndex = 5; break;
+                        case "Lineéris keresés": kodIndex = 6; break;
+                        case "Bináris keresés": kodIndex = 7; break;
                     }
                 }
                 if (PszKodok[kodIndex] != null)

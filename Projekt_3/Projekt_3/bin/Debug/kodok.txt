@@ -94,4 +94,3 @@ Eljárás BinárisKeresés(tömb, keresettÉrték):
     
     Visszatérés -1 (nem található)
 Eljárás vége
-SEP
