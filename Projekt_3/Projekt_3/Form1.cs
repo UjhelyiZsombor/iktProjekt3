@@ -19,6 +19,7 @@ namespace Projekt_3
 {
     public partial class Form1 : Form
     {
+        #region AlapElemek
         string[] KategoriaFeliratok = Beolvasas("LabelFeliratok.txt");
         Button[] KategoriaGombok = new Button[4];
         Button Vissza;
@@ -31,19 +32,21 @@ namespace Projekt_3
 
         Button Fomenu;
         Button Kod;
+        #endregion
         public Form1()
         {
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            #region AblakBeallitasok
             Text = "Alaptetelek";
             Font = new Font("Segoe UI", 12f);
             Size = new Size(620, 500);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
             CenterToScreen();
-
+            
             Panel = new Panel()
             {
                 Parent = this,
@@ -102,22 +105,9 @@ namespace Projekt_3
                 Location = new Point(0, 0),
                 Visible = false,
             };
-            TabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
             Kodok(Beolvasas("PszpszKodok.txt"));
+            #endregion
         }
-
-        private void TabControl_SelectedIndexChanged(object senderr, EventArgs e)
-        {
-            TabControl sender = senderr as TabControl;
-            if (sender.SelectedIndex != -1)
-            {
-                KodMegj.DataSource = PszKodok[sender.SelectedIndex];
-            }else
-            {
-                KodMegj.DataSource = null;
-            }
-        }
-
         private void Kod_Click(object sender, EventArgs e)
         {
             if (KodMegj.Visible == false)
@@ -143,6 +133,24 @@ namespace Projekt_3
                 KodMegj.Visible = false;
             }
         }
+
+        void Beallitas(TabPage nev, bool bal, Action valami, int szam)
+        {
+            valami();
+            KodMegj.DataSource = PszKodok[szam];
+            Fomenu.Parent = nev;
+            Kod.Parent = nev;
+            if (!bal)
+            {
+                Fomenu.Location = new Point(nev.Width - 80, nev.Height - 80);
+                Kod.Location = new Point(nev.Width - 80, nev.Height - 80 - Fomenu.Height);
+            }
+            else
+            {
+                Fomenu.Location = new Point(20, nev.Height - 80);
+                Kod.Location = new Point(20, nev.Height - 80 - Fomenu.Height);
+            }
+        }
         private void KategoriaGombok_Click(object senderr, EventArgs e)
         {
             Button sender = senderr as Button;
@@ -156,32 +164,17 @@ namespace Projekt_3
                 TabControl.TabPages.Add(EldontesPage);
                 if (TabControl.SelectedTab == MegszamolasPage)
                 {
-                    Megszamolas();
-                    KodMegj.DataSource = PszKodok[0];
-                    Fomenu.Parent = MegszamolasPage;
-                    Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
-                    Kod.Parent = MegszamolasPage;
-                    Kod.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80 - Fomenu.Height);
+                    Beallitas(MegszamolasPage, false, Megszamolas, 0);
                 }
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == MegszamolasPage)
                     {
-                        Megszamolas();
-                        KodMegj.DataSource = PszKodok[0];
-                        Fomenu.Parent = MegszamolasPage;
-                        Fomenu.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80);
-                        Kod.Parent = MegszamolasPage;
-                        Kod.Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 80 - Fomenu.Height);
+                        Beallitas(MegszamolasPage, false, Megszamolas, 0);
                     }
                     else if (TabControl.SelectedTab == EldontesPage)
                     {
-                        Eldontes();
-                        KodMegj.DataSource = PszKodok[1];
-                        Fomenu.Parent = EldontesPage;
-                        Fomenu.Location = new Point(EldontesPage.Width - 80, EldontesPage.Height - 80);
-                        Kod.Parent = EldontesPage;
-                        Kod.Location = new Point(EldontesPage.Width - 80, EldontesPage.Height - 80 - Fomenu.Height);
+                        Beallitas(EldontesPage, false, Eldontes, 1);
                     }
                 };
             }
@@ -195,32 +188,17 @@ namespace Projekt_3
                 TabControl.TabPages.Add(MetszetPage);
                 if (TabControl.SelectedTab == MasolasPage)
                 {
-                    Masolas();
-                    KodMegj.DataSource = PszKodok[2];
-                    Fomenu.Parent = MasolasPage;
-                    Fomenu.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80);
-                    Kod.Parent = MasolasPage;
-                    Kod.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80 - Fomenu.Height);
+                    Beallitas(MasolasPage, false, Masolas, 2);
                 }
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == MasolasPage)
                     {
-                        Masolas();
-                        KodMegj.DataSource = PszKodok[2];
-                        Fomenu.Parent = MasolasPage;
-                        Fomenu.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80);
-                        Kod.Parent = MasolasPage;
-                        Kod.Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 80 - Fomenu.Height);
+                        Beallitas(MasolasPage, false, Masolas, 2);
                     }
                     else if (TabControl.SelectedTab == MetszetPage)
                     {
-                        Metszet();
-                        KodMegj.DataSource = PszKodok[3];
-                        Fomenu.Parent = MetszetPage;
-                        Fomenu.Location = new Point(20, MetszetPage.Height - 80);
-                        Kod.Parent = MetszetPage;
-                        Kod.Location = new Point(20, MetszetPage.Height - 80 - Fomenu.Height);
+                        Beallitas(MetszetPage, true, Metszet, 3);
                     }
                 };
             }
@@ -234,32 +212,17 @@ namespace Projekt_3
                 TabControl.TabPages.Add(MinMaxPage);
                 if (TabControl.SelectedTab == ECSPage)
                 {
-                    ECS();
-                    KodMegj.DataSource = PszKodok[4];
-                    Fomenu.Parent = ECSPage;
-                    Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
-                    Kod.Parent = ECSPage;
-                    Kod.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80 - Fomenu.Height);
+                    Beallitas(ECSPage, false, ECS, 4);
                 }
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == ECSPage)
                     {
-                        ECS();
-                        KodMegj.DataSource = PszKodok[4];
-                        Fomenu.Parent = ECSPage;
-                        Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
-                        Kod.Parent = ECSPage;
-                        Kod.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80 - Fomenu.Height);
+                        Beallitas(ECSPage, false, ECS, 4);
                     }
                     else if (TabControl.SelectedTab == MinMaxPage)
                     {
-                        MinMax();
-                        KodMegj.DataSource = PszKodok[5];
-                        Fomenu.Parent = MinMaxPage;
-                        Fomenu.Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 80);
-                        Kod.Parent = MinMaxPage;
-                        Kod.Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 80 - Fomenu.Height);
+                        Beallitas(MinMaxPage, false, MinMax, 5);
                     }
                 };
             }
@@ -273,32 +236,17 @@ namespace Projekt_3
                 TabControl.TabPages.Add(BinKerPage);
                 if (TabControl.SelectedTab == LinKerPage)
                 {
-                    LinKer();
-                    KodMegj.DataSource = PszKodok[6];
-                    Fomenu.Parent = LinKerPage;
-                    Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
-                    Kod.Parent = LinKerPage;
-                    Kod.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80 - Fomenu.Height);
+                    Beallitas(LinKerPage, false, LinKer, 6);
                 }
                 TabControl.SelectedIndexChanged += (s, args) =>
                 {
                     if (TabControl.SelectedTab == LinKerPage)
                     {
-                        LinKer();
-                        KodMegj.DataSource = PszKodok[6];
-                        Fomenu.Parent = LinKerPage;
-                        Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
-                        Kod.Parent = LinKerPage;
-                        Kod.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80 - Fomenu.Height);
+                        Beallitas(LinKerPage, false, LinKer, 6);
                     }
                     else if (TabControl.SelectedTab == BinKerPage)
                     {
-                        BinKer();
-                        KodMegj.DataSource = PszKodok[7];
-                        Fomenu.Parent = BinKerPage;
-                        Fomenu.Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 80);
-                        Kod.Parent = BinKerPage;
-                        Kod.Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 80 - Fomenu.Height);
+                        Beallitas(BinKerPage, false, BinKer, 7);
                     }
                 };
             }
@@ -1140,6 +1088,7 @@ namespace Projekt_3
             };
         }
         #endregion
+        #region Egyeb
         int[] TombGeneralas(int also, int felso, int elemszam)
         {
             int[] tomb = new int[elemszam];
@@ -1183,5 +1132,6 @@ namespace Projekt_3
                 }
             }
         }
+        #endregion
     }
 }
