@@ -5,7 +5,7 @@ namespace Projekt_3
 {
     internal class Tetelek
     {
-        public static int Megszamolas(double[] tomb, double keresett)
+        public static int Megszamolas(int[] tomb, int keresett)
         {
             int c = 0;
             for (int i = 0; i < tomb.Length; i++)
@@ -13,7 +13,7 @@ namespace Projekt_3
                     c++;
             return c;
         }
-        public static bool Eldontes(double[] tomb, double keresett)
+        public static bool Eldontes(int[] tomb, int keresett)
         {
             bool vanE = false;
             foreach (var item in tomb)
@@ -25,18 +25,18 @@ namespace Projekt_3
             }
             return vanE;
         }
-        public static double[] Masolas(double[] tomb)
+        public static int[] Masolas(int[] tomb)
         {
-            double[] ujTomb = new double[tomb.Length];
+            int[] ujTomb = new int[tomb.Length];
             for (int i = 0; i < tomb.Length; i++)
             {
                 ujTomb[i] = tomb[i];
             }
             return ujTomb;
         }
-        public static double[] Metszet(double[] A, double[] B)
+        public static int[] Metszet(int[] A, int[] B)
         {
-            List<double> metszet = new List<double>();
+            List<int> metszet = new List<int>();
             for (int i = 0; i < A.Length; i++)
             {
                 foreach (var item in B)
@@ -49,9 +49,9 @@ namespace Projekt_3
             }
             return metszet.ToArray();
         }
-        public static double[] egyszeruCseres(double[] tomb)
+        public static int[] egyszeruCseres(int[] tomb)
         {
-            double temp;
+            int temp;
             for (int i = 0; i < tomb.Length - 1; i++)
             {
                 for (int j = i + 1; j < tomb.Length; j++)
@@ -66,10 +66,10 @@ namespace Projekt_3
             }
             return tomb;
         }
-        public static double[] MinMax(double[] tomb)
+        public static int[] MinMax(int[] tomb)
         {
             int index;
-            double seged;
+            int seged;
             for (int i = 0; i < tomb.Length - 1; i++)
             {
                 index = i;
@@ -86,7 +86,7 @@ namespace Projekt_3
             }
             return tomb;
         }
-        public static int LinearisKereses(double[] tomb, double elem)
+        public static int LinearisKereses(int[] tomb, int elem)
         {
             int index = -1;
             for (int i = 0; i < tomb.Length; i++)
@@ -99,7 +99,7 @@ namespace Projekt_3
             }
             return index;
         }
-        public static double BinarisKereses(double[] tomb, double keresettertek)
+        public static int BinarisKereses(int[] tomb, int keresettertek)
         {
             Array.Sort(tomb);
             int eleje = 0;

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,15 +23,16 @@ namespace Projekt_3
         string[] KategoriaFeliratok = Beolvasas("LabelFeliratok.txt");
         Button[] KategoriaGombok = new Button[4];
         Button Vissza;
-        Button[] Gombok = new Button[8];
-        double[] MostTomb;
-        double[] MostTomb2;
         Random r = new Random();
         TabControl TabControl;
         TabPage MegszamolasPage;
         TabPage EldontesPage;
         TabPage MasolasPage;
         TabPage MetszetPage;
+        TabPage ECSPage;
+        TabPage MinMaxPage;
+        TabPage LinKerPage;
+        TabPage BinKerPage;
         Panel Panel;
         ListBox KodMegj;
         string[][] PszKodok = new string[8][];
@@ -48,7 +50,7 @@ namespace Projekt_3
             Size = new Size(620, 500);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
-
+            CenterToScreen();
             Panel = new Panel()
             {
                 Parent = this,
@@ -107,7 +109,21 @@ namespace Projekt_3
                 Location = new Point(0, 0),
                 Visible = false,
             };
+            TabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
         }
+
+        private void TabControl_SelectedIndexChanged(object senderr, EventArgs e)
+        {
+            TabControl sender = senderr as TabControl;
+            if (sender.SelectedIndex != -1)
+            {
+                KodMegj.DataSource = PszKodok[sender.SelectedIndex];
+            }else
+            {
+                KodMegj.DataSource = null;
+            }
+        }
+
         private void Kod_Click(object sender, EventArgs e)
         {
             if (KodMegj.Visible == false)
@@ -128,6 +144,8 @@ namespace Projekt_3
                         case "Eldöntés": kodIndex = 1; break;
                         case "Másolás": kodIndex = 2; break;
                         case "Metszet": kodIndex = 3; break;
+                        case "Egyszerű cserés rendezés": kodIndex = 4; break;
+                        case "MinMax rendezés": kodIndex = 5; break;
                     }
                 }
                 if (PszKodok[kodIndex] != null)
@@ -146,9 +164,12 @@ namespace Projekt_3
             Panel.Visible = true;
             TabControl.Visible = false;
             TabControl.TabPages.Clear();
+            if (KodMegj.Visible)
+            {
+                Width -= 500;
+                KodMegj.Visible = false;
+            }
         }
-
-
         private void KategoriaGombok_Click(object senderr, EventArgs e)
         {
             Button sender = senderr as Button;
@@ -218,426 +239,931 @@ namespace Projekt_3
                     {
                         Metszet();
                         Fomenu.Parent = MetszetPage;
-                        Fomenu.Location = new Point(MetszetPage.Width - 80, MetszetPage.Height - 80);
+                        Fomenu.Location = new Point(20, MetszetPage.Height - 80);
                         Kod.Parent = MetszetPage;
-                        Kod.Location = new Point(MetszetPage.Width - 80, MetszetPage.Height - 80 - Fomenu.Height);
+                        Kod.Location = new Point(20, MetszetPage.Height - 80 - Fomenu.Height);
+                    }
+                };
+            }
+            else if (sender.Text == "Rendezések")
+            {
+                TabControl.Visible = true;
+                Panel.Visible = false;
+                ECSPage = new TabPage("Egyszerű cserés rendezés");
+                TabControl.TabPages.Add(ECSPage);
+                MinMaxPage = new TabPage("MinMax rendezés");
+                TabControl.TabPages.Add(MinMaxPage);
+                if (TabControl.SelectedTab == ECSPage)
+                {
+                    ECS();
+                    Fomenu.Parent = ECSPage;
+                    Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
+                    Kod.Parent = ECSPage;
+                    Kod.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80 - Fomenu.Height);
+                }
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == ECSPage)
+                    {
+                        ECS();
+                        Fomenu.Parent = ECSPage;
+                        Fomenu.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80);
+                        Kod.Parent = ECSPage;
+                        Kod.Location = new Point(ECSPage.Width - 80, ECSPage.Height - 80 - Fomenu.Height);
+                    }
+                    else if (TabControl.SelectedTab == MinMaxPage)
+                    {
+                        MinMax();
+                        Fomenu.Parent = MinMaxPage;
+                        Fomenu.Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 80);
+                        Kod.Parent = MinMaxPage;
+                        Kod.Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 80 - Fomenu.Height);
+                    }
+                };
+            }
+            else if (sender.Text == "Keresések")
+            {
+                TabControl.Visible = true;
+                Panel.Visible = false;
+                LinKerPage = new TabPage("Lineáris keresés");
+                TabControl.TabPages.Add(LinKerPage);
+                BinKerPage = new TabPage("Bináris keresés");
+                TabControl.TabPages.Add(BinKerPage);
+                if (TabControl.SelectedTab == LinKerPage)
+                {
+                    LinKer();
+                    Fomenu.Parent = LinKerPage;
+                    Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
+                    Kod.Parent = LinKerPage;
+                    Kod.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80 - Fomenu.Height);
+                }
+                TabControl.SelectedIndexChanged += (s, args) =>
+                {
+                    if (TabControl.SelectedTab == LinKerPage)
+                    {
+                        LinKer();
+                        Fomenu.Parent = LinKerPage;
+                        Fomenu.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80);
+                        Kod.Parent = LinKerPage;
+                        Kod.Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 80 - Fomenu.Height);
+                    }
+                    else if (TabControl.SelectedTab == BinKerPage)
+                    {
+                        BinKer();
+                        Fomenu.Parent = BinKerPage;
+                        Fomenu.Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 80);
+                        Kod.Parent = BinKerPage;
+                        Kod.Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 80 - Fomenu.Height);
                     }
                 };
             }
         }
-
-        private void EldontesPage_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         #region Megszamolas
-        TextBox Keresett;
-        TextBox Also;
-        TextBox Felso;
-        Label Eredmeny;
-        #region Masolas
-        TextBox Also2;
-        TextBox Felso2;
-        Label Eredmeny2;
-        #endregion
-        #region Metszet
-        TextBox Also3;
-        TextBox Felso3;
-        #endregion
         private void Megszamolas()
         {
-            Also = new TextBox()
-            {
-                Parent = MegszamolasPage,
-                Location = new Point(20, 20),
-                Size = new Size(180, 40),
-                Text = "Számok alsó határa",
-            };
-            Also.Tag = "Also";
-            Also.Enter += TextBox_Enter;
-            Also.Leave += TextBox_Leave;
+            NumericUpDown Also, Felso, Keresett, Elemszam;
+            Label Eredmeny;
 
-            Felso = new TextBox()
+            Label[] Labelek = new Label[4];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:", "Keresett elem:" };
+            for (int i = 0; i < Labelek.Length; i++)
             {
-                Parent = MegszamolasPage,
-                Location = new Point(20, Also.Location.Y + Also.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Számok felső határa"
-            };
-            Felso.Tag = "Felso";
-            Felso.Enter += TextBox_Enter;
-            Felso.Leave += TextBox_Leave;
+                Labelek[i] = new Label()
+                {
+                    Parent = MegszamolasPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
 
-            NumericUpDown Elemszam = new NumericUpDown()
+            Also = new NumericUpDown()
             {
                 Parent = MegszamolasPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = MegszamolasPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = MegszamolasPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
                 Minimum = 1,
-                Maximum = 10000000,
-                Location = new Point(20, Felso.Location.Y + Felso.Size.Height + 20),
-                Size = new Size(180, 40),
+                Maximum = 10000000
             };
-            Elemszam.ValueChanged += Elemszam_ValueChanged;
 
-            Keresett = new TextBox()
+            Keresett = new NumericUpDown()
             {
                 Parent = MegszamolasPage,
-                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
+                Location = new Point(20, Labelek[3].Bottom + 10),
                 Size = new Size(180, 40),
-                Text = "Keresett elem",
-                Enabled = false,
+                Enabled = false
             };
-            Keresett.Tag = "Keresett";
-            Keresett.Enter += TextBox_Enter;
-            Keresett.Leave += Keresett_Leave;
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+            Felso.ValueChanged += (s, e) =>
+            {
+                Keresett.Minimum = Also.Value;
+                Keresett.Maximum = Felso.Value;
+                Keresett.Enabled = true;
+            };
 
             Button OK = new Button()
             {
                 Parent = MegszamolasPage,
-                Location = new Point(20, Keresett.Location.Y + Keresett.Size.Height + 20),
+                Location = new Point(20, Keresett.Bottom + 20),
                 Size = new Size(180, 40),
-                Text = "OK",
+                Text = "OK"
             };
-            OK.Click += OK_Click;
+
             Eredmeny = new Label()
             {
                 Parent = MegszamolasPage,
-                Location = new Point(20, OK.Location.Y + OK.Size.Height + 20),
-                Size = new Size(500, 40),
-                Text = "Keresett elem előfordulása: ",
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+                Text = "Keresett elem előfordulása: "
             };
-        }
-        private void Eldontes()
-        {
-            Also = new TextBox()
-            {
-                Parent = EldontesPage,
-                Location = new Point(20, 20),
-                Size = new Size(180, 40),
-                Text = "Számok alsó határa",
-            };
-            Also.Tag = "Also";
-            Also.Enter += TextBox_Enter;
-            Also.Leave += TextBox_Leave;
 
-            Felso = new TextBox()
+            OK.Click += (s, e) =>
             {
-                Parent = EldontesPage,
-                Location = new Point(20, Also.Location.Y + Also.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Számok felső határa"
-            };
-            Felso.Tag = "Felso";
-            Felso.Enter += TextBox_Enter;
-            Felso.Leave += TextBox_Leave;
-
-            NumericUpDown Elemszam = new NumericUpDown()
-            {
-                Parent = EldontesPage,
-                Minimum = 1,
-                Maximum = 10000000,
-                Location = new Point(20, Felso.Location.Y + Felso.Size.Height + 20),
-                Size = new Size(180, 40),
-            };
-            Elemszam.ValueChanged += Elemszam_ValueChanged;
-
-            Keresett = new TextBox()
-            {
-                Parent = EldontesPage,
-                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Keresett elem",
-                Enabled = false,
-            };
-            Keresett.Tag = "Keresett";
-            Keresett.Enter += TextBox_Enter;
-            Keresett.Leave += Keresett_Leave;
-
-            Button OK3 = new Button()
-            {
-                Parent = EldontesPage,
-                Location = new Point(20, Keresett.Location.Y + Keresett.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "OK",
-            };
-            OK3.Click += OK3_Click;
-            Eredmeny = new Label()
-            {
-                Parent = EldontesPage,
-                Location = new Point(20, OK3.Location.Y + OK3.Size.Height + 20),
-                Size = new Size(500, 40),
-                Text = "Keresett szám benne van-e a tömbben: ",
-            };
-        }
-        private void Masolas()
-        {
-            Also2 = new TextBox()
-            {
-                Parent = MasolasPage,
-                Location = new Point(20, 20),
-                Size = new Size(180, 40),
-                Text = "Számok alsó határa",
-            };
-            Also2.Tag = "Also2";
-            Also2.Enter += TextBox_Enter;
-            Also2.Leave += TextBox_Leave;
-
-            Felso2 = new TextBox()
-            {
-                Parent = MasolasPage,
-                Location = new Point(20, Also2.Location.Y + Also2.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Számok felső határa"
-            };
-            Felso2.Tag = "Felso2";
-            Felso2.Enter += TextBox_Enter;
-            Felso2.Leave += TextBox_Leave;
-
-            NumericUpDown Elemszam = new NumericUpDown()
-            {
-                Parent = MasolasPage,
-                Minimum = 1,
-                Maximum = 10000000,
-                Location = new Point(20, Felso2.Location.Y + Felso2.Size.Height + 20),
-                Size = new Size(180, 40),
-            };
-            Elemszam.ValueChanged += Elemszam_ValueChanged;
-            Button OK2 = new Button()
-            {
-                Parent = MasolasPage,
-                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "OK",
-            };
-            OK2.Click += OK2_Click1;
-            Eredmeny = new Label()
-            {
-                Parent = MasolasPage,
-                Location = new Point(20, OK2.Location.Y + OK2.Size.Height + 20),
-                Size = new Size(500, 40),
-                Text = "A másolt tömb: ",
-            };
-        }
-
-        private void Metszet()
-        {
-            Also3 = new TextBox()
-            {
-                Parent = MetszetPage,
-                Location = new Point(20, 20),
-                Size = new Size(180, 40),
-                Text = "Számok alsó határa",
-            };
-            Also3.Tag = "Also3";
-            Also3.Enter += TextBox_Enter;
-            Also3.Leave += TextBox_Leave;
-
-            Felso3 = new TextBox()
-            {
-                Parent = MetszetPage,
-                Location = new Point(20, Also3.Location.Y + Also3.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "Számok felső határa"
-            };
-            Felso3.Tag = "Felso3";
-            Felso3.Enter += TextBox_Enter;
-            Felso3.Leave += TextBox_Leave;
-
-            NumericUpDown Elemszam = new NumericUpDown()
-            {
-                Parent = MetszetPage,
-                Minimum = 1,
-                Maximum = 10000000,
-                Location = new Point(20, Felso3.Location.Y + Felso3.Size.Height + 20),
-                Size = new Size(180, 40),
-            };
-            Elemszam.ValueChanged += Elemszam_ValueChanged;
-            Button OK4 = new Button()
-            {
-                Parent = MetszetPage,
-                Location = new Point(20, Elemszam.Location.Y + Elemszam.Size.Height + 20),
-                Size = new Size(180, 40),
-                Text = "OK",
-            };
-            OK4.Click += OK4_Click;
-            Eredmeny = new Label()
-            {
-                Parent = MetszetPage,
-                Location = new Point(20, OK4.Location.Y + OK4.Size.Height + 20),
-                Size = new Size(500, 40),
-                Text = "Metszet: ",
-            };
-        }
-
-
-
-        int? also, felso, elemszam;
-        double? keresett;
-
-        private void OK_Click(object sender, EventArgs e)
-        {
-            if (also.HasValue && felso.HasValue && keresett.HasValue && elemszam.HasValue)
-            {
-                if (also > felso)
+                Eredmeny.Text = "Keresett elem előfordulása: ";
+                if (Felso.Enabled && Keresett.Enabled)
                 {
-                    int? temp = felso;
-                    felso = also;
-                    also = temp;
+                    Eredmeny.Text += Tetelek.Megszamolas(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
                 }
-                MostTomb = new double[(int)elemszam];
-                for (int i = 0; i < elemszam; i++)
-                {
-                    MostTomb[i] = r.Next((int)also, (int)felso) * Math.Round(r.NextDouble() + 1, 1);
-                }
-                double keres = (double)keresett;
-                int talalat = Tetelek.Megszamolas(MostTomb, keres);
-                Eredmeny.Text = $"Keresett elem előfordulása: {talalat}db";
-            }
-        }
-
-        private void OK2_Click1(object sender, EventArgs e)
-        {
-            if (also.HasValue && felso.HasValue && elemszam.HasValue)
-            {
-                if (also > felso)
-                {
-                    int? temp = felso;
-                    felso = also;
-                    also = temp;
-                }
-
-                MostTomb = new double[(int)elemszam];
-                for (int i = 0; i < elemszam; i++)
-                {
-                    MostTomb[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
-                }
-                double[] talalat = Tetelek.Masolas(MostTomb);
-                Eredmeny.Text = "A másolt tömb: " + string.Join("; ", talalat);
-            }
-        }
-
-        private void OK3_Click(object sender, EventArgs e)
-        {
-            if (also.HasValue && felso.HasValue && keresett.HasValue && elemszam.HasValue)
-            {
-                if (also > felso)
-                {
-                    int? temp = felso;
-                    felso = also;
-                    also = temp;
-                }
-                MostTomb = new double[(int)elemszam];
-                for (int i = 0; i < elemszam; i++)
-                {
-                    MostTomb[i] = r.Next((int)also, (int)felso) * Math.Round(r.NextDouble() + 1, 1);
-                }
-                double keres = (double)keresett;
-                string talalat = Tetelek.Eldontes(MostTomb, keres) ? "Igen" : "Nem";
-                Eredmeny.Text = $"Keresett elem benne van-e a tömbben: {talalat}";
-            }
-        }
-
-        private void OK4_Click(object sender, EventArgs e)
-        {
-            if (also.HasValue && felso.HasValue && elemszam.HasValue)
-            {
-                if (also > felso)
-                {
-                    int? temp = felso;
-                    felso = also;
-                    also = temp;
-                }
-
-                MostTomb = new double[(int)elemszam];
-                MostTomb2 = new double[(int)elemszam];
-                for (int i = 0; i < elemszam; i++)
-                {
-                    MostTomb[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
-                }
-                for (int i = 0; i < elemszam; i++)
-                {
-                    MostTomb2[i] = r.Next((int)also, (int)felso) + Math.Round(r.NextDouble() + 1, 1);
-                }
-                double[] metszet = Tetelek.Metszet(MostTomb,MostTomb2);
-                Eredmeny.Text = "Metszet: " + string.Join("; ", metszet);
-            }
-        }
-
-        private void Keresett_Leave(object senderr, EventArgs e)
-        {
-            TextBox sender = senderr as TextBox;
-            if (!int.TryParse(sender.Text, out int alsoHatar) && !string.IsNullOrWhiteSpace(sender.Text))
-            {
-                sender.Text = "Érvénytelen érték!";
-            }
-            else if (string.IsNullOrWhiteSpace(sender.Text))
-            {
-                sender.Text = "Keresett elem";
-            }
-            else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue || int.Parse(sender.Text) > felso || int.Parse(sender.Text) < also)
-            {
-                keresett = int.Parse(sender.Text);
-            }
-        }
-        private void TextBox_Leave(object senderr, EventArgs e)
-        {
-            string text;
-            TextBox sender = senderr as TextBox;
-            if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2" || sender.Tag.ToString() == "Also3")
-            {
-                text = "Számok alsó határa";
-            }
-            else
-            {
-                text = "Számok felső határa";
-            }
-
-
-            if (!int.TryParse(sender.Text, out int hatar) && !string.IsNullOrWhiteSpace(sender.Text))
-            {
-                sender.Text = "Érvénytelen érték!";
-            }
-            else if (string.IsNullOrWhiteSpace(sender.Text))
-            {
-                sender.Text = text;
-            }
-            else if (int.Parse(sender.Text) <= int.MaxValue || int.Parse(sender.Text) >= int.MinValue)
-            {
-                if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Also2" || sender.Tag.ToString() == "Also3")
-                {
-                    also = int.Parse(sender.Text);
-                }
-                else
-                {
-                    felso = int.Parse(sender.Text);
-                }
-            }
-            if (sender.Tag.ToString() == "Also" || sender.Tag.ToString() == "Felso") 
-            {
-                if (also != null && felso != null)
-                {
-                    Keresett.Enabled = true;
-                }
-                else
-                {
-                    Keresett.Enabled = false;
-                }
-            }
-
-        }
-        private void TextBox_Enter(object senderr, EventArgs e)
-        {
-            TextBox sender = senderr as TextBox;
-            if (sender.Text == "Számok alsó határa" || sender.Text == "Érvénytelen érték!" || sender.Text == "Számok felső határa" || sender.Text == "Keresett elem")
-            {
-                sender.Text = "";
-            }
-        }
-        private void Elemszam_ValueChanged(object senderr, EventArgs e)
-        {
-            NumericUpDown sender = senderr as NumericUpDown;
-            elemszam = (int)sender.Value;
+            };
         }
         #endregion
+        #region Eldontes
+        private void Eldontes()
+        {
+            NumericUpDown Also, Felso, Keresett, Elemszam;
+            Label Eredmeny;
+
+            Label[] Labelek = new Label[4];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:", "Keresett elem:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = EldontesPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Keresett = new NumericUpDown()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, Labelek[3].Bottom + 10),
+                Size = new Size(180, 40),
+                Enabled = false
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+            Felso.ValueChanged += (s, e) =>
+            {
+                Keresett.Minimum = Also.Value;
+                Keresett.Maximum = Felso.Value;
+                Keresett.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, Keresett.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = EldontesPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+            };
+
+            OK.Click += (s, e) =>
+            {
+                if (Felso.Enabled && Keresett.Enabled)
+                {
+                    bool eredemny = Tetelek.Eldontes(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
+                    if (eredemny)
+                    {
+                        Eredmeny.Text = "Az elem benne van a tömbben.";
+                    } else
+                    {
+                        Eredmeny.Text = "Az elem nincs benne a tömbben.";
+                    }
+                }
+            };
+        }
+        #endregion
+        #region Masolas
+        private void Masolas()
+        {
+            NumericUpDown Also, Felso, Elemszam;
+            Label Eredmeny;
+            Label[] Labelek = new Label[3];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:"};
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = MasolasPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = MasolasPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = MasolasPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = MasolasPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = MasolasPage,
+                Location = new Point(20, Elemszam.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = MasolasPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+            };
+            Label EredetiTombLabel = new Label()
+            {
+                Parent = MasolasPage,
+                Text = "Eredeti tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20,Labelek[0].Location.Y ),
+            };
+            TextBox EredetiTomb = new TextBox()
+            {
+                Parent = MasolasPage,
+                Size  = new Size(350, 100),
+                Location = new Point(EredetiTombLabel.Location.X, Also.Location.Y),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            Label MasoltTombLabel = new Label()
+            {
+                Parent = MasolasPage,
+                Text = "Másolt tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, EredetiTomb.Bottom + 10),
+            };
+            TextBox MasoltTomb = new TextBox()
+            {
+                Parent = MasolasPage,
+                Size = new Size(350, 100),
+                Location = new Point(MasoltTombLabel.Location.X, MasoltTombLabel.Bottom + 10),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            OK.Click += (s, e) =>
+            {
+                if (Felso.Enabled)
+                {
+                    int[] eredetitomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    EredetiTomb.Text = string.Join(",", eredetitomb);
+                    MasoltTomb.Text = string.Join(",", Tetelek.Masolas(eredetitomb));
+                }
+            };
+        }
+        #endregion
+        #region Metszet
+        private void Metszet()
+        {
+            NumericUpDown Also, Felso, Elemszam;
+            Label Eredmeny;
+            Label[] Labelek = new Label[3];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = MetszetPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, Elemszam.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = MetszetPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+            };
+            Label ElsoTombLabel = new Label()
+            {
+                Parent = MetszetPage,
+                Text = "Eredeti tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, Labelek[0].Location.Y),
+            };
+            TextBox ElsoTomb = new TextBox()
+            {
+                Parent = MetszetPage,
+                Size = new Size(350, 100),
+                Location = new Point(ElsoTombLabel.Location.X, Also.Location.Y),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            Label MasodikTombLabel = new Label()
+            {
+                Parent = MetszetPage,
+                Text = "Másolt tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, ElsoTomb.Bottom + 10),
+            };
+            TextBox MasodikTomb = new TextBox()
+            {
+                Parent = MetszetPage,
+                Size = new Size(350, 100),
+                Location = new Point(MasodikTombLabel.Location.X, MasodikTombLabel.Bottom + 10),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            Label MetszetTombLabel = new Label()
+            {
+                Parent = MetszetPage,
+                Text = "Másolt tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, MasodikTomb.Bottom + 10),
+            };
+            TextBox MetszetTomb = new TextBox()
+            {
+                Parent = MetszetPage,
+                Size = new Size(350, 90),
+                Location = new Point(MetszetTombLabel.Location.X, MetszetTombLabel.Bottom + 10),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            OK.Click += (s, e) =>
+            {
+                if (Felso.Enabled)
+                {
+                    int[] elsotomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    int[] masodiktomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    ElsoTomb.Text = string.Join(",", elsotomb);
+                    MasodikTomb.Text = string.Join(",", Tetelek.Masolas(masodiktomb));
+                    MetszetTomb.Text = string.Join(",", Tetelek.Metszet(elsotomb, masodiktomb));
+                }
+            };
+        }
+        #endregion
+        #region ECS
+        private void ECS()
+        {
+            NumericUpDown Also, Felso, Elemszam;
+            Label Eredmeny;
+            Label[] Labelek = new Label[3];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = ECSPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = ECSPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = ECSPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = ECSPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = ECSPage,
+                Location = new Point(20, Elemszam.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = ECSPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+            };
+            Label ElsoTombLabel = new Label()
+            {
+                Parent = ECSPage,
+                Text = "Eredeti tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, Labelek[0].Location.Y),
+            };
+            TextBox ElsoTomb = new TextBox()
+            {
+                Parent = ECSPage,
+                Size = new Size(350, 100),
+                Location = new Point(ElsoTombLabel.Location.X, Also.Location.Y),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            Label RendezettTombLabel = new Label()
+            {
+                Parent = ECSPage,
+                Text = "Rendezett tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, ElsoTomb.Bottom + 10),
+            };
+            TextBox RendezettTomb = new TextBox()
+            {
+                Parent = ECSPage,
+                Size = new Size(350, 100),
+                Location = new Point(RendezettTombLabel.Location.X, RendezettTombLabel.Bottom + 10),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            OK.Click += (s, e) =>
+            {
+                if (Felso.Enabled)
+                {
+                    int[] elsotomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    ElsoTomb.Text = string.Join(", ", elsotomb);
+                    RendezettTomb.Text = string.Join (", ", Tetelek.egyszeruCseres(elsotomb));
+                }
+            };
+        }
+        #endregion
+        #region  MinMax
+        private void MinMax()
+        {
+            NumericUpDown Also, Felso, Elemszam;
+            Label Eredmeny;
+            Label[] Labelek = new Label[3];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = MinMaxPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = MinMaxPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = MinMaxPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = MinMaxPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = MinMaxPage,
+                Location = new Point(20, Elemszam.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = MinMaxPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+            };
+            Label ElsoTombLabel = new Label()
+            {
+                Parent = MinMaxPage,
+                Text = "Eredeti tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, Labelek[0].Location.Y),
+            };
+            TextBox ElsoTomb = new TextBox()
+            {
+                Parent = MinMaxPage,
+                Size = new Size(350, 100),
+                Location = new Point(ElsoTombLabel.Location.X, Also.Location.Y),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            Label RendezettTombLabel = new Label()
+            {
+                Parent = MinMaxPage,
+                Text = "Rendezett tömb:",
+                AutoSize = true,
+                Location = new Point(Also.Right + 20, ElsoTomb.Bottom + 10),
+            };
+            TextBox RendezettTomb = new TextBox()
+            {
+                Parent = MinMaxPage,
+                Size = new Size(350, 100),
+                Location = new Point(RendezettTombLabel.Location.X, RendezettTombLabel.Bottom + 10),
+                ScrollBars = ScrollBars.Vertical,
+                Multiline = true,
+            };
+            OK.Click += (s, e) =>
+            {
+                if (Felso.Enabled)
+                {
+                    int[] elsotomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    ElsoTomb.Text = string.Join(", ", elsotomb);
+                    RendezettTomb.Text = string.Join(", ", Tetelek.MinMax(elsotomb));
+                }
+            };
+        }
+        #endregion
+        #region  LinKer
+        private void LinKer()
+        {
+            NumericUpDown Also, Felso, Keresett, Elemszam;
+            Label Eredmeny;
+
+            Label[] Labelek = new Label[4];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:", "Keresett elem:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = LinKerPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Keresett = new NumericUpDown()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, Labelek[3].Bottom + 10),
+                Size = new Size(180, 40),
+                Enabled = false
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+            Felso.ValueChanged += (s, e) =>
+            {
+                Keresett.Minimum = Also.Value;
+                Keresett.Maximum = Felso.Value;
+                Keresett.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, Keresett.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = LinKerPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+                Text = "Keresett elem indexe: "
+            };
+
+            OK.Click += (s, e) =>
+            {
+                Eredmeny.Text = "Keresett elem indexe: ";
+                if (Felso.Enabled && Keresett.Enabled)
+                {
+                    int szam =  Tetelek.LinearisKereses(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
+                    if (szam != -1)
+                    {
+                        Eredmeny.Text += szam;
+                    } else
+                    {
+                        Eredmeny.Text = "A keresett elem nincs benne a tömbben";
+                    }
+                }
+            };
+        }
+        #endregion
+        #region  BinKer
+        private void BinKer()
+        {
+            NumericUpDown Also, Felso, Keresett, Elemszam;
+            Label Eredmeny;
+
+            Label[] Labelek = new Label[4];
+            string[] LabelekText = { "Alsó határ:", "Felső határ:", "Elemszám:", "Keresett elem:" };
+            for (int i = 0; i < Labelek.Length; i++)
+            {
+                Labelek[i] = new Label()
+                {
+                    Parent = BinKerPage,
+                    Text = LabelekText[i],
+                    AutoSize = true,
+                    Location = new Point(20, 20 + i * 70)
+                };
+            }
+
+            Also = new NumericUpDown()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, Labelek[0].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            Felso = new NumericUpDown()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, Labelek[1].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue,
+                Enabled = false
+            };
+
+            Elemszam = new NumericUpDown()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, Labelek[2].Bottom + 10),
+                Size = new Size(180, 40),
+                Minimum = 1,
+                Maximum = 10000000
+            };
+
+            Keresett = new NumericUpDown()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, Labelek[3].Bottom + 10),
+                Size = new Size(180, 40),
+                Enabled = false
+            };
+
+            Also.ValueChanged += (s, e) =>
+            {
+                Felso.Minimum = Also.Value;
+                Felso.Enabled = true;
+            };
+            Felso.ValueChanged += (s, e) =>
+            {
+                Keresett.Minimum = Also.Value;
+                Keresett.Maximum = Felso.Value;
+                Keresett.Enabled = true;
+            };
+
+            Button OK = new Button()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, Keresett.Bottom + 20),
+                Size = new Size(180, 40),
+                Text = "OK"
+            };
+
+            Eredmeny = new Label()
+            {
+                Parent = BinKerPage,
+                Location = new Point(20, OK.Bottom + 20),
+                AutoSize = true,
+                Text = "Keresett elem indexe: "
+            };
+
+            OK.Click += (s, e) =>
+            {
+                Eredmeny.Text = "Keresett elem indexe: ";
+                if (Felso.Enabled && Keresett.Enabled)
+                {
+                    int szam = Tetelek.BinarisKereses(TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value), (int)Keresett.Value);
+                    if (szam != -1)
+                    {
+                        Eredmeny.Text += szam;
+                    }
+                    else
+                    {
+                        Eredmeny.Text = "A keresett elem nincs benne a tömbben";
+                    }
+                }
+            };
+        }
+        #endregion
+        int[] TombGeneralas(int also, int felso, int elemszam)
+        {
+            int[] tomb = new int[elemszam];
+            for (int i = 0; i < tomb.Length; i++)
+            {
+                tomb[i] = r.Next(also, felso + 1);
+            }
+            return tomb;
+        }
         static string[] Beolvasas(string FileNev)
         {
             List<string> szoveg = new List<string>();
