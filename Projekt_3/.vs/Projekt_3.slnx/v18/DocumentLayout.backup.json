@@ -22,20 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Tetelek.cs",
-              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
-              "RelativeDocumentMoniker": "Projekt_3\\Tetelek.cs",
-              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
-              "RelativeToolTip": "Projekt_3\\Tetelek.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA5wHcAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T11:54:10.221Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -44,9 +32,23 @@
               "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
               "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Form1.cs",
               "RelativeToolTip": "Projekt_3\\Form1.cs",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAwwKUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAFgCAAAAAAAAAAAuwHsCAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T11:54:10.306Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Tetelek.cs",
+              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "RelativeDocumentMoniker": "Projekt_3\\Tetelek.cs",
+              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "RelativeToolTip": "Projekt_3\\Tetelek.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAIwBIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T11:54:10.221Z",
               "EditorCaption": ""
             },
             {
