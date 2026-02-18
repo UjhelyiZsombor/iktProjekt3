@@ -1,17 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\",
+  "WorkspaceRootPath": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|c:\\users\\pompe\\source\\repos\\iktprojekt3\\most\\projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:2:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|c:\\users\\pompe\\source\\repos\\iktprojekt3\\kell\\projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\projekt_3\\tetelek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:1:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|c:\\users\\pompe\\source\\repos\\iktprojekt3\\kell\\projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\projekt_3\\tetelek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\tetelek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{9E532B1C-E066-4857-8FB8-BF3E1530F13D}|Projekt_3\\Projekt_3.csproj|solutionrelative:projekt_3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -22,29 +26,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Form1.cs",
-              "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
-              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Form1.cs",
-              "RelativeToolTip": "Projekt_3\\Form1.cs",
-              "ViewState": "AgIAAFgCAAAAAAAAAAAuwHsCAABJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T11:54:10.306Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Tetelek.cs",
-              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Tetelek.cs",
               "RelativeDocumentMoniker": "Projekt_3\\Tetelek.cs",
-              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Tetelek.cs",
+              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Tetelek.cs",
               "RelativeToolTip": "Projekt_3\\Tetelek.cs",
               "ViewState": "AgIAACkAAAAAAAAAAAAIwBIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -53,14 +43,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Form1.cs",
               "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
               "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\most\\Projekt_3\\Projekt_3\\Form1.cs [Design]",
-              "RelativeToolTip": "Projekt_3\\Form1.cs [Design]",
+              "RelativeToolTip": "..\\..\\most\\Projekt_3\\Projekt_3\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T11:54:10.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Form1.cs",
+              "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
+              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Form1.cs*",
+              "RelativeToolTip": "Projekt_3\\Form1.cs*",
+              "ViewState": "AgIAAOcBAAAAAAAAAAAswD8CAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T11:54:10.306Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Form1.cs",
+              "RelativeDocumentMoniker": "Projekt_3\\Form1.cs",
+              "ToolTip": "C:\\Users\\pompe\\source\\repos\\iktProjekt3\\kell\\Projekt_3\\Projekt_3\\Form1.cs*",
+              "RelativeToolTip": "Projekt_3\\Form1.cs*",
+              "ViewState": "AgIAAG4DAAAAAAAAAADwv5YDAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-18T20:41:39.389Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -22,7 +22,6 @@ namespace Projekt_3
 
         Button Fomenu;
         Button Kod;
-        Button Futtatas;
 
         Button MenuGomb;
         Panel BeolvasasPanel;
@@ -123,13 +122,6 @@ namespace Projekt_3
                 Visible = false,
                 BorderStyle = BorderStyle.FixedSingle
             };
-            Image kep3 = Image.FromFile("futtatas.png");
-            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
-            Futtatas = new Button()
-            {
-                Image = kep4,
-                ImageAlign = ContentAlignment.MiddleCenter,
-            };
             #endregion
         }
         private void MenuGomb_Click(object sender, EventArgs e)
@@ -172,7 +164,6 @@ namespace Projekt_3
             };
             BeolvasasKilepes.Click += BeolvasasKilepes_Click;
         }
-
         private void BeolvasasButton_Click(object sender, EventArgs e)
         {
             Button senderr = sender as Button;
@@ -189,13 +180,11 @@ namespace Projekt_3
                 MessageBox.Show("A fájl nem található!");
             }
         }
-
         private void BeolvasasKilepes_Click(object sender, EventArgs e)
         {
             foreach (Control c in Panel.Controls) c.Show();
             BeolvasasPanel.Visible = false;
         }
-
         private void Kod_Click(object sender, EventArgs e)
         {
             if (KodMegj.Visible == false)
@@ -288,20 +277,15 @@ namespace Projekt_3
             KodMegj.DataSource = PszKodok[szam];
             Fomenu.Parent = nev;
             Kod.Parent = nev;
-            Futtatas.Parent = nev;
             if (!bal)
             {
                 Fomenu.Location = new Point(nev.Width - 80, nev.Height - 80);
                 Kod.Location = new Point(nev.Width - 80, nev.Height - 80 - Fomenu.Height);
-                Futtatas.Location = new Point(nev.Width - 80, nev.Height - 110 - Kod.Height);
-                Futtatas.Size = new Size(Kod.Width, Kod.Height);
             }
             else
             {
                 Fomenu.Location = new Point(20, nev.Height - 80);
                 Kod.Location = new Point(20, nev.Height - 80 - Fomenu.Height);
-                Futtatas.Location = new Point(20, nev.Height - 110 - Kod.Height);
-                Futtatas.Size = new Size(Kod.Width, Kod.Height);
             }
         }
         void Beallitas2(string elsoPage, string MasodikPage)
@@ -394,6 +378,17 @@ namespace Projekt_3
                 Text = "Keresett elem előfordulása: "
             };
 
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = MegszamolasPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
+
             OK.Click += (s, e) =>
             {
                 Eredmeny.Text = "Keresett elem előfordulása: ";
@@ -404,7 +399,6 @@ namespace Projekt_3
             };
             Futtatas.Click -= Futtatas_Click;
             Futtatas.Click += Futtatas_Click;
-
 
             void Futtatas_Click(object sender, EventArgs e)
             {
@@ -553,6 +547,16 @@ namespace Projekt_3
                 Parent = EldontesPage,
                 Location = new Point(20, OK.Bottom + 20),
                 AutoSize = true,
+            };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = EldontesPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(EldontesPage.Width - 80, EldontesPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
             };
 
             OK.Click += (s, e) =>
@@ -740,6 +744,16 @@ namespace Projekt_3
                 ScrollBars = ScrollBars.Vertical,
                 Multiline = true,
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = MasolasPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -749,6 +763,20 @@ namespace Projekt_3
                     MasoltTomb.Text = string.Join(",", Tetelek.Masolas(eredetitomb));
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    EredetiTomb.Text = string.Join(", ", MegadottFile);
+                    MasoltTomb.Text = string.Join(", ", Tetelek.Masolas(MegadottFile));
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                }
+            }
         }
         #endregion
         #region Metszet
@@ -850,7 +878,7 @@ namespace Projekt_3
             Label MetszetTombLabel = new Label()
             {
                 Parent = MetszetPage,
-                Text = "Másolt tömb:",
+                Text = "Metszet:",
                 AutoSize = true,
                 Location = new Point(Also.Right + 20, MasodikTomb.Bottom + 10),
             };
@@ -862,6 +890,17 @@ namespace Projekt_3
                 ScrollBars = ScrollBars.Vertical,
                 Multiline = true,
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = MetszetPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(20, MetszetPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
+
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -873,6 +912,27 @@ namespace Projekt_3
                     MetszetTomb.Text = string.Join(",", Tetelek.Metszet(elsotomb, masodiktomb));
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                if (!Felso.Enabled)
+                {
+                    MessageBox.Show("Add meg az első tömb paramétereit.");
+                }
+                else if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    int[] masodiktomb = TombGeneralas((int)Also.Value, (int)Felso.Value, (int)Elemszam.Value);
+                    ElsoTomb.Text = string.Join(", ", MegadottFile);
+                    MasodikTomb.Text = string.Join(", ", masodiktomb);
+                    MetszetTomb.Text = string.Join(", ", Tetelek.Metszet(MegadottFile, masodiktomb));
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                }
+            }
         }
         #endregion
         #region ECS
