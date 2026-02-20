@@ -25,6 +25,7 @@ namespace Projekt_3
 
         Button MenuGomb;
         Panel BeolvasasPanel;
+        ToolTip TT = new ToolTip();
 
         int[] MegadottFile;
         #endregion
@@ -36,6 +37,9 @@ namespace Projekt_3
         {
             #region AblakBeallitasok
             Text = "Alaptetelek";
+            TT.AutoPopDelay = 5000;
+            TT.InitialDelay = 1000;
+            TT.ReshowDelay = 500;
             Font = new Font("Segoe UI", 12f);
             Size = new Size(620, 500);
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -83,6 +87,7 @@ namespace Projekt_3
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter
             };
+            TT.SetToolTip(Fomenu, "Kilépés a főmenübe");
             Fomenu.Click += Fomenu_Click;
 
             Kod = new Button()
@@ -100,6 +105,7 @@ namespace Projekt_3
                 Location = new Point(0, 0),
                 Visible = false,
             };
+            TT.SetToolTip(Kod, "Kód megjelenítése");
             Kodok(Beolvasas("PszpszKodok.txt"));
 
             Image kep = Image.FromFile("betoltes.png");
@@ -112,6 +118,7 @@ namespace Projekt_3
                 ImageAlign = ContentAlignment.MiddleCenter,
                 Location = new Point(Width - 80, 20)
             };
+            TT.SetToolTip(MenuGomb, "Fájl beolvasása");
             MenuGomb.BringToFront();
             MenuGomb.Click += MenuGomb_Click;
             BeolvasasPanel = new Panel()
@@ -298,6 +305,7 @@ namespace Projekt_3
         #region Megszamolas
         private void Megszamolas()
         {
+
             NumericUpDown Also, Felso, Keresett, Elemszam;
             Label Eredmeny;
 
@@ -322,7 +330,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = MegszamolasPage,
@@ -332,7 +340,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = MegszamolasPage,
@@ -341,7 +349,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Keresett = new NumericUpDown()
             {
                 Parent = MegszamolasPage,
@@ -349,7 +357,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Enabled = false
             };
-
+            TT.SetToolTip(Keresett, "Az a szám, amelyiket keressük");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -369,7 +377,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Megszámolás indítása");
             Eredmeny = new Label()
             {
                 Parent = MegszamolasPage,
@@ -388,7 +396,7 @@ namespace Projekt_3
                 Location = new Point(MegszamolasPage.Width - 80, MegszamolasPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
-
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 Eredmeny.Text = "Keresett elem előfordulása: ";
@@ -494,7 +502,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = EldontesPage,
@@ -504,7 +512,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = EldontesPage,
@@ -513,7 +521,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Keresett = new NumericUpDown()
             {
                 Parent = EldontesPage,
@@ -521,7 +529,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Enabled = false
             };
-
+            TT.SetToolTip(Keresett, "Az a szám, amelyiket keressük");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -541,7 +549,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Eldöntés indítása");
             Eredmeny = new Label()
             {
                 Parent = EldontesPage,
@@ -558,7 +566,7 @@ namespace Projekt_3
                 Location = new Point(EldontesPage.Width - 80, EldontesPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
-
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled && Keresett.Enabled)
@@ -674,7 +682,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = MasolasPage,
@@ -684,7 +692,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = MasolasPage,
@@ -693,7 +701,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -707,7 +715,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Másolás indítása");
             Eredmeny = new Label()
             {
                 Parent = MasolasPage,
@@ -754,6 +762,7 @@ namespace Projekt_3
                 Location = new Point(MasolasPage.Width - 80, MasolasPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -805,7 +814,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = MetszetPage,
@@ -815,7 +824,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = MetszetPage,
@@ -824,13 +833,12 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
                 Felso.Enabled = true;
             };
-
             Button OK = new Button()
             {
                 Parent = MetszetPage,
@@ -838,7 +846,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Metszet létrehozásának indítása");
             Eredmeny = new Label()
             {
                 Parent = MetszetPage,
@@ -900,7 +908,7 @@ namespace Projekt_3
                 Location = new Point(20, MetszetPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
-
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -961,7 +969,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = ECSPage,
@@ -971,7 +979,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = ECSPage,
@@ -980,7 +988,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -994,7 +1002,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Rendezés indítása");
             Eredmeny = new Label()
             {
                 Parent = ECSPage,
@@ -1041,6 +1049,7 @@ namespace Projekt_3
                 Location = new Point(ECSPage.Width - 80, ECSPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -1092,7 +1101,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = MinMaxPage,
@@ -1102,7 +1111,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = MinMaxPage,
@@ -1111,7 +1120,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -1125,7 +1134,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Rendezés indítása");
             Eredmeny = new Label()
             {
                 Parent = MinMaxPage,
@@ -1172,6 +1181,7 @@ namespace Projekt_3
                 Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -1224,7 +1234,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = LinKerPage,
@@ -1234,7 +1244,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = LinKerPage,
@@ -1243,7 +1253,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Keresett = new NumericUpDown()
             {
                 Parent = LinKerPage,
@@ -1251,7 +1261,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Enabled = false
             };
-
+            TT.SetToolTip(Keresett, "Az a szám, amelyiket keressük");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -1271,7 +1281,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Keresés indítása");
             Eredmeny = new Label()
             {
                 Parent = LinKerPage,
@@ -1289,7 +1299,7 @@ namespace Projekt_3
                 Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
-
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 Eredmeny.Text = "Keresett elem indexe: ";
@@ -1409,7 +1419,7 @@ namespace Projekt_3
                 Minimum = int.MinValue,
                 Maximum = int.MaxValue
             };
-
+            TT.SetToolTip(Also, "Tömb alsó határa, minimuma");
             Felso = new NumericUpDown()
             {
                 Parent = BinKerPage,
@@ -1419,7 +1429,7 @@ namespace Projekt_3
                 Maximum = int.MaxValue,
                 Enabled = false
             };
-
+            TT.SetToolTip(Felso, "Tömb felső határa, maximuma");
             Elemszam = new NumericUpDown()
             {
                 Parent = BinKerPage,
@@ -1428,7 +1438,7 @@ namespace Projekt_3
                 Minimum = 1,
                 Maximum = 10000000
             };
-
+            TT.SetToolTip(Elemszam, "Tömb elemeinek száma");
             Keresett = new NumericUpDown()
             {
                 Parent = BinKerPage,
@@ -1436,7 +1446,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Enabled = false
             };
-
+            TT.SetToolTip(Keresett, "Az a szám, amelyiket keressük");
             Also.ValueChanged += (s, e) =>
             {
                 Felso.Minimum = Also.Value;
@@ -1456,7 +1466,7 @@ namespace Projekt_3
                 Size = new Size(180, 40),
                 Text = "OK"
             };
-
+            TT.SetToolTip(OK, "Keresés indítása");
             Eredmeny = new Label()
             {
                 Parent = BinKerPage,
@@ -1474,7 +1484,7 @@ namespace Projekt_3
                 Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 110 - Kod.Height),
                 Size = new Size(Kod.Width, Kod.Height)
             };
-
+            TT.SetToolTip(Futtatas, "Futtatás beolvasott fájl használatával.");
             OK.Click += (s, e) =>
             {
                 Eredmeny.Text = "Keresett elem indexe: ";
