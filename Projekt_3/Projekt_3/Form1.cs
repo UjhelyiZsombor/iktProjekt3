@@ -132,58 +132,16 @@ namespace Projekt_3
         }
         private void MenuGomb_Click(object sender, EventArgs e)
         {
-            foreach (Control c in Panel.Controls) c.Hide();
-            BeolvasasPanel.Visible = true;
-            BeolvasasPanel.BringToFront();
-            Label BeolvasasLabel;
-            BeolvasasLabel = new Label()
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Válasszon fájlt";
+            openFileDialog.Filter = "Szövegfájl (*.txt)|*.txt";
+            openFileDialog.DefaultExt = "txt";
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.CheckPathExists = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Parent = BeolvasasPanel,
-                Location = new Point(20,20),
-                AutoSize = true,
-                Text = "Meghajtó, elérési út, fájlnév, kiterjesztés: "
-            };
-            TextBox BeolvasasTextbox;
-            BeolvasasTextbox = new TextBox()
-            {
-                Parent = BeolvasasPanel,
-                Location = new Point(20, BeolvasasLabel.Bottom + 10),
-                Size = new Size(200, 60)
-            };
-            Button BeolvasasButton;
-            BeolvasasButton = new Button()
-            {
-                Parent = BeolvasasPanel,
-                Size = new Size(50,BeolvasasTextbox.Height),
-                Location = new Point(BeolvasasTextbox.Right + 10, BeolvasasTextbox.Location.Y),
-                Text = "OK",
-                Tag = BeolvasasTextbox
-            };
-            BeolvasasButton.Click += BeolvasasButton_Click;
-            Button BeolvasasKilepes;
-            BeolvasasKilepes = new Button()
-            {
-                Parent = BeolvasasPanel,
-                Text = "Vissza",
-                Location = new Point(BeolvasasPanel.Width - 100, BeolvasasTextbox.Location.Y),
-                Size = new Size(80, BeolvasasTextbox.Height),
-            };
-            BeolvasasKilepes.Click += BeolvasasKilepes_Click;
-        }
-        private void BeolvasasButton_Click(object sender, EventArgs e)
-        {
-            Button senderr = sender as Button;
-            TextBox asd = senderr.Tag as TextBox;
-            
-            if (File.Exists(asd.Text))
-            {
-                MegadottFile = FelhasznaloOlvasas(asd.Text);
-                MessageBox.Show(string.Join(",", MegadottFile));
-                BeolvasasPanel.Visible = false;
-                foreach (Control c in Panel.Controls) c.Show();
-            } else
-            {
-                MessageBox.Show("A fájl nem található!");
+                MegadottFile = FelhasznaloOlvasas(openFileDialog.FileName);
             }
         }
         private void BeolvasasKilepes_Click(object sender, EventArgs e)
