@@ -82,3 +82,13 @@ C:\Users\pompe\source\repos\iktProjekt3\1231231\Projekt_3\Projekt_3\obj\Debug\Pr
 C:\Users\pompe\source\repos\iktProjekt3\1231231\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
 C:\Users\pompe\source\repos\iktProjekt3\1231231\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
 C:\Users\pompe\source\repos\iktProjekt3\1231231\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe.config
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\bin\Debug\Projekt_3.exe
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\bin\Debug\Projekt_3.pdb
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.AssemblyReference.cache
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Form1.resources
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.Properties.Resources.resources
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.GenerateResource.cache
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.csproj.CoreCompileInputs.cache
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.exe
+C:\Users\pompe\source\repos\iktProjekt3\sdfe\Projekt_3\Projekt_3\obj\Debug\Projekt_3.pdb

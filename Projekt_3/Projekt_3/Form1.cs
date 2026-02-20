@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,6 +37,7 @@ namespace Projekt_3
         private void Form1_Load(object sender, EventArgs e)
         {
             #region AblakBeallitasok
+
             Text = "Alaptetelek";
             TT.AutoPopDelay = 5000;
             TT.InitialDelay = 1000;
@@ -73,6 +73,8 @@ namespace Projekt_3
                 };
                 KategoriaGombok[i].Click += KategoriaGombok_Click;
             }
+            #endregion
+            #region Vezérlőbeállítások
             Vissza = new Button()
             {
                 Parent = Panel,
@@ -255,6 +257,7 @@ namespace Projekt_3
                 };
             }
         }
+        //Tételek menügombjainak beállítása
         void Beallitas(TabPage nev, bool bal, Action valami, int szam)
         {
             nev.Controls.Clear();
@@ -274,6 +277,7 @@ namespace Projekt_3
                 Kod.Location = new Point(20, nev.Height - 80 - Fomenu.Height);
             }
         }
+        //TabControl beállítása 
         void Beallitas2(string elsoPage, string MasodikPage)
         {
             TabControl.Visible = true;
