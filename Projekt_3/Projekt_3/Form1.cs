@@ -1031,6 +1031,16 @@ namespace Projekt_3
                 ScrollBars = ScrollBars.Vertical,
                 Multiline = true,
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = ECSPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(ECSPage.Width - 80, ECSPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -1040,6 +1050,20 @@ namespace Projekt_3
                     RendezettTomb.Text = string.Join(", ", Tetelek.egyszeruCseres(elsotomb));
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    ElsoTomb.Text = string.Join(", ", MegadottFile);
+                    RendezettTomb.Text = string.Join(", ", Tetelek.egyszeruCseres(MegadottFile));
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                }
+            }
         }
         #endregion
         #region  MinMax
@@ -1138,6 +1162,16 @@ namespace Projekt_3
                 ScrollBars = ScrollBars.Vertical,
                 Multiline = true,
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = MinMaxPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(MinMaxPage.Width - 80, MinMaxPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
             OK.Click += (s, e) =>
             {
                 if (Felso.Enabled)
@@ -1147,6 +1181,20 @@ namespace Projekt_3
                     RendezettTomb.Text = string.Join(", ", Tetelek.MinMax(elsotomb));
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    ElsoTomb.Text = string.Join(", ", MegadottFile);
+                    RendezettTomb.Text = string.Join(", ", Tetelek.MinMax(MegadottFile));
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                }
+            }
         }
         #endregion
         #region  LinKer
@@ -1231,6 +1279,16 @@ namespace Projekt_3
                 AutoSize = true,
                 Text = "Keresett elem indexe: "
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = LinKerPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(LinKerPage.Width - 80, LinKerPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
 
             OK.Click += (s, e) =>
             {
@@ -1248,6 +1306,80 @@ namespace Projekt_3
                     }
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                Panel FuttatasPanel;
+                FuttatasPanel = new Panel()
+                {
+                    Parent = LinKerPage,
+                    Size = new Size(200, 100),
+                    Location = new Point(LinKerPage.Width / 2 - 100, LinKerPage.Height / 2 - 50),
+                    BorderStyle = BorderStyle.FixedSingle,
+                };
+                FuttatasPanel.BringToFront();
+
+                Label KeresettLabel;
+                KeresettLabel = new Label()
+                {
+                    Parent = FuttatasPanel,
+                    Text = "Keresett elem:",
+                    Location = new Point(10, 10),
+                    AutoSize = true,
+                };
+
+                NumericUpDown KeresettNumericUpDown;
+                KeresettNumericUpDown = new NumericUpDown()
+                {
+                    Parent = FuttatasPanel,
+                    Location = new Point(10, KeresettLabel.Bottom + 10),
+                    Minimum = int.MinValue,
+                    Maximum = int.MaxValue
+                };
+
+                Button KeresettOK;
+                KeresettOK = new Button()
+                {
+                    Parent = FuttatasPanel,
+                    Size = new Size(50, KeresettNumericUpDown.Height),
+                    Location = new Point(KeresettNumericUpDown.Right + 10, KeresettNumericUpDown.Location.Y),
+                    Text = "OK",
+                    Tag = (FuttatasPanel, KeresettNumericUpDown)
+                };
+                KeresettOK.Click += KeresettOK_Click;
+            }
+            void KeresettOK_Click(object sender, EventArgs e)
+            {
+                Button gomb = sender as Button;
+
+                var adat = ((Panel panel, NumericUpDown numeric))gomb.Tag;
+                adat.panel.Dispose();
+                int szam = (int)adat.numeric.Value;
+                int eredmeny = 0;
+
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    eredmeny = Tetelek.LinearisKereses(MegadottFile, szam);
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                    adat.panel.Dispose();
+                }
+
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    if (eredmeny == -1)
+                    {
+                        Eredmeny.Text = $"A keresett elem nincs benne a tömbben.";
+                    } else
+                    {
+                        Eredmeny.Text = $"A keresett elem indexe: {eredmeny}";
+                    }
+                }
+            }
         }
         #endregion
         #region  BinKer
@@ -1332,6 +1464,16 @@ namespace Projekt_3
                 AutoSize = true,
                 Text = "Keresett elem indexe: "
             };
+            Image kep3 = Image.FromFile("futtatas.png");
+            Bitmap kep4 = new Bitmap(kep3, new Size(25, 25));
+            Button Futtatas = new Button()
+            {
+                Parent = BinKerPage,
+                Image = kep4,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(BinKerPage.Width - 80, BinKerPage.Height - 110 - Kod.Height),
+                Size = new Size(Kod.Width, Kod.Height)
+            };
 
             OK.Click += (s, e) =>
             {
@@ -1349,6 +1491,81 @@ namespace Projekt_3
                     }
                 }
             };
+            Futtatas.Click -= Futtatas_Click;
+            Futtatas.Click += Futtatas_Click;
+
+            void Futtatas_Click(object sender, EventArgs e)
+            {
+                Panel FuttatasPanel;
+                FuttatasPanel = new Panel()
+                {
+                    Parent = BinKerPage,
+                    Size = new Size(200, 100),
+                    Location = new Point(BinKerPage.Width / 2 - 100, BinKerPage.Height / 2 - 50),
+                    BorderStyle = BorderStyle.FixedSingle,
+                };
+                FuttatasPanel.BringToFront();
+
+                Label KeresettLabel;
+                KeresettLabel = new Label()
+                {
+                    Parent = FuttatasPanel,
+                    Text = "Keresett elem:",
+                    Location = new Point(10, 10),
+                    AutoSize = true,
+                };
+
+                NumericUpDown KeresettNumericUpDown;
+                KeresettNumericUpDown = new NumericUpDown()
+                {
+                    Parent = FuttatasPanel,
+                    Location = new Point(10, KeresettLabel.Bottom + 10),
+                    Minimum = int.MinValue,
+                    Maximum = int.MaxValue
+                };
+
+                Button KeresettOK;
+                KeresettOK = new Button()
+                {
+                    Parent = FuttatasPanel,
+                    Size = new Size(50, KeresettNumericUpDown.Height),
+                    Location = new Point(KeresettNumericUpDown.Right + 10, KeresettNumericUpDown.Location.Y),
+                    Text = "OK",
+                    Tag = (FuttatasPanel, KeresettNumericUpDown)
+                };
+                KeresettOK.Click += KeresettOK_Click;
+            }
+            void KeresettOK_Click(object sender, EventArgs e)
+            {
+                Button gomb = sender as Button;
+
+                var adat = ((Panel panel, NumericUpDown numeric))gomb.Tag;
+                adat.panel.Dispose();
+                int szam = (int)adat.numeric.Value;
+                int eredmeny = 0;
+
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    eredmeny = Tetelek.BinarisKereses(MegadottFile, szam);
+                }
+                else
+                {
+                    MessageBox.Show("Nincs beolvasott fájl.");
+                    adat.panel.Dispose();
+                }
+
+                if (MegadottFile != null && MegadottFile.Length > 0)
+                {
+                    if (eredmeny == -1)
+                    {
+                        Eredmeny.Text = $"A keresett elem nincs benne a tömbben.";
+                    }
+                    else
+                    {
+                        Eredmeny.Text = $"A keresett elem indexe: {eredmeny}";
+                    }
+                }
+            }
         }
         #endregion
         #region Egyeb
