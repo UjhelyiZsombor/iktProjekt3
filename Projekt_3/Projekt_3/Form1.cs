@@ -84,8 +84,8 @@ namespace Projekt_3
             Fomenu = new Button()
             {
                 Text = "Főmenü",
-                AutoSize = true,
-                TextAlign = ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(80, 30)
             };
             TT.SetToolTip(Fomenu, "Kilépés a főmenübe");
             Fomenu.Click += Fomenu_Click;
@@ -93,11 +93,10 @@ namespace Projekt_3
             Kod = new Button()
             {
                 Text = "Kód",
-                AutoSize = true,
+                Size = new Size(80, 30),
                 TextAlign = ContentAlignment.MiddleCenter
             };
             Kod.Click += Kod_Click;
-
             TabControl = new TabControl()
             {
                 Parent = this,
