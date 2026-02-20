@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projekt_3
@@ -79,7 +81,27 @@ namespace Projekt_3
                 Location = new Point(Panel.Width / 2 - 100, KategoriaGombok[3].Location.Y + 60),
                 TextAlign = ContentAlignment.MiddleCenter,
             };
-            Vissza.Click += (senderr, args) => Application.Exit();
+            Vissza.Click += async (senderr, args) =>
+            {
+                Panel Koszonoes = new Panel()
+                {
+                    Parent = this,
+                    Size = new Size(Width, Height),
+                    Location = new Point(0,0),
+                };
+                Koszonoes.BringToFront();
+                Label KoszonesText = new Label()
+                {
+                    Parent = Koszonoes,
+                    Font = new Font("Arial", 60f),
+                    Text = "Viszlát",
+                    AutoSize = true,
+                };
+                KoszonesText.Location = new Point(Width / 2 - KoszonesText.Width / 2, Height / 2 - KoszonesText.Height / 2 - 50);
+
+                await Task.Delay(5000);
+                Application.Exit();
+            };
 
             Fomenu = new Button()
             {
@@ -813,7 +835,7 @@ namespace Projekt_3
             Label ElsoTombLabel = new Label()
             {
                 Parent = MetszetPage,
-                Text = "Eredeti tömb:",
+                Text = "Első tömb:",
                 AutoSize = true,
                 Location = new Point(Also.Right + 20, Labelek[0].Location.Y),
             };
@@ -828,7 +850,7 @@ namespace Projekt_3
             Label MasodikTombLabel = new Label()
             {
                 Parent = MetszetPage,
-                Text = "Másolt tömb:",
+                Text = "Második tömb:",
                 AutoSize = true,
                 Location = new Point(Also.Right + 20, ElsoTomb.Bottom + 10),
             };
